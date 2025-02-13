@@ -1,4 +1,4 @@
-package com.pregnancy.edu.feature.register.composable
+package com.pregnancy.edu.feature.authentication.register.composable
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

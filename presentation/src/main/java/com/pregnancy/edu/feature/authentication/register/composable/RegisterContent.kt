@@ -1,36 +1,36 @@
-package com.pregnancy.edu.feature.register.composable
+package com.pregnancy.edu.feature.authentication.register.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.base.composable.Section
-import com.pregnancy.edu.feature.register.viewmodel.RegisterEvent
-import com.pregnancy.edu.feature.register.viewmodel.RegisterState
+import com.pregnancy.edu.feature.authentication.register.event.RegisterEvent
+import com.pregnancy.edu.feature.authentication.register.state.RegisterState
 
 @Composable
 fun RegisterContent(
     modifier: Modifier = Modifier,
     navController: NavController,
     registerState: RegisterState,
-    handleEvent: (event: RegisterEvent) -> Unit
+    onTriggerEvent: (event: RegisterEvent) -> Unit
 ) {
     Section(
         modifier = modifier
     ) {
         RegisterForm(
             fullName = registerState.fullName,
-            onFullNameChange = { handleEvent(RegisterEvent.FullNameChanged(it)) },
+            onFullNameChange = { onTriggerEvent(RegisterEvent.FullNameChanged(it)) },
             email = registerState.email,
-            onEmailChange = { handleEvent(RegisterEvent.EmailChanged(it)) },
+            onEmailChange = { onTriggerEvent(RegisterEvent.EmailChanged(it)) },
             password = registerState.password,
-            onPasswordChange = { handleEvent(RegisterEvent.PasswordChanged(it)) },
+            onPasswordChange = { onTriggerEvent(RegisterEvent.PasswordChanged(it)) },
             confirmPassword = registerState.confirmPassword,
-            onConfirmPasswordChange = { handleEvent(RegisterEvent.ConfirmPasswordChanged(it)) },
+            onConfirmPasswordChange = { onTriggerEvent(RegisterEvent.ConfirmPasswordChanged(it)) },
             acceptedTerms = registerState.acceptedTerms,
-            onAcceptedTermsChange = { handleEvent(RegisterEvent.AcceptedTermsChecked(it)) },
-            enabledRegister = registerState.isFormValid,
-            onRegisterClick = { handleEvent(RegisterEvent.Register) },
+            onAcceptedTermsChange = { onTriggerEvent(RegisterEvent.AcceptedTermsChecked(it)) },
+            enabledRegister = true,
+            onRegisterClick = { onTriggerEvent(RegisterEvent.Register) },
             onNavigateToLogin = {
                 navController.popBackStack(
                     route = Destination.Login.route,

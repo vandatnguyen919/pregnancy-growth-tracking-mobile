@@ -1,8 +1,8 @@
-package com.pregnancy.edu.feature.register.viewmodel
+package com.pregnancy.edu.feature.authentication.register.event
 
-import com.pregnancy.edu.feature.login.viewmodel.LoginEvent
+import com.pregnancy.edu.common.base.interfaces.ViewEvent
 
-sealed class RegisterEvent {
+sealed class RegisterEvent : ViewEvent {
 
     class FullNameChanged(val fullName: String) : RegisterEvent()
 

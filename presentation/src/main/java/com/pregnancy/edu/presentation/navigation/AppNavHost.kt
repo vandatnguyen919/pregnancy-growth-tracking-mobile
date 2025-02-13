@@ -11,9 +11,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.base.composable.ContentArea
-import com.pregnancy.edu.feature.login.LoginScreen
+import com.pregnancy.edu.feature.authentication.login.LoginScreen
 import com.pregnancy.edu.feature.onboarding.OnboardingScreen
-import com.pregnancy.edu.feature.register.RegisterScreen
+import com.pregnancy.edu.feature.authentication.register.RegisterScreen
 
 @Composable
 fun AppNavHost(

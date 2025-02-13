@@ -1,6 +1,8 @@
-package com.pregnancy.edu.feature.login.viewmodel
+package com.pregnancy.edu.feature.authentication.login.event
 
-sealed class LoginEvent {
+import com.pregnancy.edu.common.base.interfaces.ViewEvent
+
+sealed class LoginEvent : ViewEvent {
 
     class EmailChanged(val email: String) : LoginEvent()
 

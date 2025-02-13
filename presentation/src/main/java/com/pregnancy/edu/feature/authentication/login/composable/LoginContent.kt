@@ -1,4 +1,4 @@
-package com.pregnancy.edu.feature.login.composable
+package com.pregnancy.edu.feature.authentication.login.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -7,8 +7,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.base.composable.Section
-import com.pregnancy.edu.feature.login.viewmodel.LoginEvent
-import com.pregnancy.edu.feature.login.viewmodel.LoginState
+import com.pregnancy.edu.feature.authentication.login.event.LoginEvent
+import com.pregnancy.edu.feature.authentication.login.state.LoginState
 
 @Preview
 @Composable
@@ -21,7 +21,7 @@ fun LoginContentPreview() {
     LoginContent(
         navController = navController,
         loginState = loginState,
-        handleEvent = {}
+        onTriggerEvent = {}
     )
 }
 
@@ -30,7 +30,7 @@ fun LoginContent(
     modifier: Modifier = Modifier,
     navController: NavController,
     loginState: LoginState,
-    handleEvent: (event: LoginEvent) -> Unit
+    onTriggerEvent: (event: LoginEvent) -> Unit
 ) {
     Section(
         modifier = modifier
@@ -46,11 +46,11 @@ fun LoginContent(
                 }
             },
             email = loginState.email,
-            onEmailChange = { handleEvent(LoginEvent.EmailChanged(it)) },
+            onEmailChange = { onTriggerEvent(LoginEvent.EmailChanged(it)) },
             password = loginState.password,
-            onPasswordChange = { handleEvent(LoginEvent.PasswordChanged(it)) },
-            enabledLogin = loginState.isFormValid,
-            onAuthenticate = { handleEvent(LoginEvent.Authenticate) }
+            onPasswordChange = { onTriggerEvent(LoginEvent.PasswordChanged(it)) },
+            enabledLogin = loginState.isLoginEnabled,
+            onAuthenticate = { onTriggerEvent(LoginEvent.Authenticate) }
         )
     }
 }
