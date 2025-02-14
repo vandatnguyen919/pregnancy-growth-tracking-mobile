@@ -15,18 +15,21 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.feature.authentication.register.composable.RegisterContent
+import com.pregnancy.edu.presentation.app.rememberAppState
+import com.pregnancy.edu.presentation.navigation.PregnancyAppState
 
 @Preview
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen(navController = rememberNavController())
+    RegisterScreen(appState = rememberAppState())
 }
 
 @Composable
 fun RegisterScreen(
+    appState: PregnancyAppState,
     modifier: Modifier = Modifier,
-    navController: NavController,
     registerViewModel: RegisterViewModel = viewModel()
 ) {
     val uiState by registerViewModel.uiState.collectAsStateWithLifecycle()
@@ -45,9 +48,14 @@ fun RegisterScreen(
         contentAlignment = Alignment.BottomCenter
     ) {
         RegisterContent(
-            navController = navController,
             registerState = uiState,
-            onTriggerEvent = registerViewModel::onTriggerEvent
+            onTriggerEvent = registerViewModel::onTriggerEvent,
+            popUpToLogin = {
+                appState.navController.popBackStack(
+                    route = Destination.Login.route,
+                    inclusive = false
+                )
+            }
         )
     }
 }

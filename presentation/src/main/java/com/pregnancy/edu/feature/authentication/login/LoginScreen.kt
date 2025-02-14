@@ -28,26 +28,26 @@ import androidx.navigation.compose.rememberNavController
 import com.pregnancy.edu.R
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.feature.authentication.login.composable.LoginContent
+import com.pregnancy.edu.presentation.app.rememberAppState
+import com.pregnancy.edu.presentation.navigation.PregnancyAppState
 
 @Composable
 @Preview
 fun LoginScreenPreview() {
-    LoginScreen(navController = rememberNavController())
+    LoginScreen(appState = rememberAppState())
 }
 
 @Composable
 fun LoginScreen(
+    appState: PregnancyAppState,
     modifier: Modifier = Modifier,
-    navController: NavController,
     loginViewModel: LoginViewModel = viewModel()
 ) {
     val loginState by loginViewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(loginState.isAuthenticated) {
         if (loginState.isAuthenticated) {
-            navController.navigate(Destination.Home.route) {
-                popUpTo(Destination.Login.route) { inclusive = true }
-            }
+            appState.clearAndNavigate(Destination.Home.route)
         }
     }
 
@@ -88,9 +88,11 @@ fun LoginScreen(
             visible = !loginState.isLoading
         ) {
             LoginContent(
-                navController = navController,
                 loginState = loginState,
-                onTriggerEvent = loginViewModel::onTriggerEvent
+                onTriggerEvent = loginViewModel::onTriggerEvent,
+                onNavigateToRegister = {
+                    appState.navigate(Destination.Register.route)
+                }
             )
         }
     }

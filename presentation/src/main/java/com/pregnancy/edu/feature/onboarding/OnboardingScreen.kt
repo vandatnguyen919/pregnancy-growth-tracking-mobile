@@ -27,6 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pregnancy.edu.R
@@ -36,18 +38,21 @@ import com.pregnancy.edu.common.base.composable.Section
 import com.pregnancy.edu.feature.onboarding.composable.OnboardingContent
 import com.pregnancy.edu.feature.onboarding.composable.OnboardingIndicator
 import com.pregnancy.edu.feature.onboarding.composable.OnboardingPager
+import com.pregnancy.edu.presentation.app.rememberAppState
+import com.pregnancy.edu.presentation.navigation.PregnancyAppState
 import kotlinx.coroutines.launch
 
 @Preview
 @Composable
 fun OnboardingScreenPreview() {
-    OnboardingScreen(navController = rememberNavController())
+    OnboardingScreen(appState = rememberAppState())
 }
 
 @Composable
 fun OnboardingScreen(
-    navController: NavController,
-    modifier: Modifier = Modifier
+    appState: PregnancyAppState,
+    modifier: Modifier = Modifier,
+    onboardingViewModel: OnboardingViewModel = viewModel()
 ) {
     Box(
         modifier = modifier
@@ -64,12 +69,9 @@ fun OnboardingScreen(
     ) {
         OnboardingContent(
             onFinishOnboarding = {
-                navController.navigate(Destination.Login.route) {
-                    popUpTo(Destination.Onboarding.route) {
-                        inclusive = true
-                    }
-                }
-            }
+                appState.clearAndNavigate(Destination.Login.route)
+            },
+            pages = onboardingViewModel.uiState.collectAsStateWithLifecycle().value
         )
     }
 }

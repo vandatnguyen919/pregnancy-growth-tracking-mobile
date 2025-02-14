@@ -11,9 +11,9 @@ import com.pregnancy.edu.feature.authentication.register.state.RegisterState
 @Composable
 fun RegisterContent(
     modifier: Modifier = Modifier,
-    navController: NavController,
     registerState: RegisterState,
-    onTriggerEvent: (event: RegisterEvent) -> Unit
+    onTriggerEvent: (event: RegisterEvent) -> Unit,
+    popUpToLogin: () -> Unit
 ) {
     Section(
         modifier = modifier
@@ -31,12 +31,7 @@ fun RegisterContent(
             onAcceptedTermsChange = { onTriggerEvent(RegisterEvent.AcceptedTermsChecked(it)) },
             enabledRegister = true,
             onRegisterClick = { onTriggerEvent(RegisterEvent.Register) },
-            onNavigateToLogin = {
-                navController.popBackStack(
-                    route = Destination.Login.route,
-                    inclusive = false
-                )
-            }
+            popUpToLogin = popUpToLogin
         )
     }
 }

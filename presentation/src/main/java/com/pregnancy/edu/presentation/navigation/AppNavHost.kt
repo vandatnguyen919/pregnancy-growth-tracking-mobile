@@ -18,12 +18,12 @@ import com.pregnancy.edu.feature.authentication.register.RegisterScreen
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
+    appState: PregnancyAppState,
     startDestination: String = Destination.RootOnboarding.route
 ) {
     NavHost(
         modifier = modifier,
-        navController = navController,
+        navController = appState.navController,
         startDestination = startDestination
     ) {
         // Onboarding
@@ -32,9 +32,7 @@ fun AppNavHost(
             startDestination = Destination.Onboarding.route
         ) {
             composable(Destination.Onboarding.route) {
-                OnboardingScreen(
-                    navController = navController
-                )
+                OnboardingScreen(appState = appState)
             }
         }
 
@@ -44,14 +42,10 @@ fun AppNavHost(
             startDestination = Destination.Login.route
         ) {
             composable(Destination.Login.route) {
-                LoginScreen(
-                    navController = navController
-                )
+                LoginScreen(appState = appState)
             }
             composable(Destination.Register.route) {
-                RegisterScreen(
-                    navController = navController
-                )
+                RegisterScreen(appState = appState)
             }
         }
 

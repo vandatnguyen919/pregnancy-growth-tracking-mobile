@@ -19,7 +19,7 @@ fun LoginContentPreview() {
         password = "password",
     )
     LoginContent(
-        navController = navController,
+        onNavigateToRegister = { },
         loginState = loginState,
         onTriggerEvent = {}
     )
@@ -28,23 +28,15 @@ fun LoginContentPreview() {
 @Composable
 fun LoginContent(
     modifier: Modifier = Modifier,
-    navController: NavController,
     loginState: LoginState,
-    onTriggerEvent: (event: LoginEvent) -> Unit
+    onTriggerEvent: (event: LoginEvent) -> Unit,
+    onNavigateToRegister: () -> Unit,
 ) {
     Section(
         modifier = modifier
     ) {
         LoginForm(
-            onNavigateToRegister = {
-                navController.navigate(Destination.Register.route) {
-                    popUpTo(Destination.Login.route) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            },
+            onNavigateToRegister = onNavigateToRegister,
             email = loginState.email,
             onEmailChange = { onTriggerEvent(LoginEvent.EmailChanged(it)) },
             password = loginState.password,

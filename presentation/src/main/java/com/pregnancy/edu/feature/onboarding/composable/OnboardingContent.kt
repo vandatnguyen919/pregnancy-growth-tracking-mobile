@@ -24,26 +24,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun OnboardingContent(
     modifier: Modifier = Modifier,
-    onFinishOnboarding: () -> Unit
+    onFinishOnboarding: () -> Unit,
+    pages: List<OnboardingPage>,
 ) {
-    val pages = listOf(
-        OnboardingPage(
-            title = "Welcome to PregnaJoy",
-            description = "Your trusted companion throughout your pregnancy journey",
-            imageRes = R.drawable.pregnancy_woman // Replace with your actual image resource
-        ),
-        OnboardingPage(
-            title = "Track Your Progress",
-            description = "Monitor your pregnancy week by week with detailed insights",
-            imageRes = R.drawable.checklist // Replace with your actual image resource
-        ),
-        OnboardingPage(
-            title = "Expert Guidance",
-            description = "Access reliable information from healthcare professionals",
-            imageRes = R.drawable.baby // Replace with your actual image resource
-        )
-    )
-
     val pagerState = rememberPagerState(pageCount = { pages.size })
     val scope = rememberCoroutineScope()
     Column(

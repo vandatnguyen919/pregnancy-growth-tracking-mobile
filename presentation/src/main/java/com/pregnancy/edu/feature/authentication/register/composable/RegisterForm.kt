@@ -33,7 +33,7 @@ fun RegisterForm(
     onAcceptedTermsChange: (Boolean) -> Unit,
     enabledRegister: Boolean,
     onRegisterClick: () -> Unit,
-    onNavigateToLogin: () -> Unit
+    popUpToLogin: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -96,7 +96,7 @@ fun RegisterForm(
         )
         TextButton(
             modifier = Modifier.padding(top = 20.dp),
-            onClick = onNavigateToLogin
+            onClick = popUpToLogin
         ) {
             Text(
                 text = stringResource(R.string.text_back_to_login),

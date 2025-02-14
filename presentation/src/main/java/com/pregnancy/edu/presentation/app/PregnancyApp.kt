@@ -10,19 +10,21 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.theme.PregnancyTheme
 import com.pregnancy.edu.presentation.composable.BottomNavigationBar
 import com.pregnancy.edu.presentation.navigation.AppNavHost
+import com.pregnancy.edu.presentation.navigation.PregnancyAppState
 
 @Composable
 fun PregnancyApp() {
-    PregnancyTheme {
 
-        val navController = rememberNavController()
-        val navBackStackEntry = navController.currentBackStackEntryAsState()
+    PregnancyTheme {
+        val appState = rememberAppState()
+        val navBackStackEntry = appState.navController.currentBackStackEntryAsState()
         val currentDestination by remember(navBackStackEntry) {
             derivedStateOf {
                 navBackStackEntry.value?.destination?.route?.let {
@@ -46,9 +48,7 @@ fun PregnancyApp() {
                         .padding(it)
                 ) {
                     Box {
-                        AppNavHost(
-                            navController = navController
-                        )
+                        AppNavHost(appState = appState)
                     }
                 }
             },
@@ -59,16 +59,19 @@ fun PregnancyApp() {
                 BottomNavigationBar(
                     currentDestination = currentDestination,
                     onNavigate = { destinationRoute ->
-                        navController.navigate(destinationRoute.route) {
-                            popUpTo(Destination.RootHome.route) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        appState.navigate(destinationRoute.route)
                     }
                 )
             }
         )
+    }
+}
+
+@Composable
+fun rememberAppState(
+    navController: NavHostController = rememberNavController(),
+): PregnancyAppState {
+    return remember(navController) {
+        PregnancyAppState(navController)
     }
 }
