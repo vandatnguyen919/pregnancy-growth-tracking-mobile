@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,13 +20,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.pregnancy.edu.R
 import com.pregnancy.edu.common.base.Destination
+import com.pregnancy.edu.feature.authentication.login.composable.AuthenticationErrorDialog
 import com.pregnancy.edu.feature.authentication.login.composable.LoginContent
+import com.pregnancy.edu.feature.authentication.login.event.LoginEvent
 import com.pregnancy.edu.presentation.app.rememberAppState
 import com.pregnancy.edu.presentation.navigation.PregnancyAppState
 
@@ -41,7 +41,7 @@ fun LoginScreenPreview() {
 fun LoginScreen(
     appState: PregnancyAppState,
     modifier: Modifier = Modifier,
-    loginViewModel: LoginViewModel = viewModel()
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val loginState by loginViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -92,6 +92,14 @@ fun LoginScreen(
                 onTriggerEvent = loginViewModel::onTriggerEvent,
                 onNavigateToRegister = {
                     appState.navigate(Destination.Register.route)
+                }
+            )
+        }
+        loginState.error?.let { error ->
+            AuthenticationErrorDialog(
+                error = error,
+                dismissError = {
+                    loginViewModel.onTriggerEvent(LoginEvent.ErrorDismissed)
                 }
             )
         }

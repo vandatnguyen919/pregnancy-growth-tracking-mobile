@@ -9,4 +9,6 @@ sealed class LoginEvent : ViewEvent {
     class PasswordChanged(val password: String) : LoginEvent()
 
     data object Authenticate : LoginEvent()
+
+    data object ErrorDismissed : LoginEvent()
 }

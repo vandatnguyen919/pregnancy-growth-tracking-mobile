@@ -18,7 +18,6 @@ import com.pregnancy.edu.R
 import com.pregnancy.edu.common.base.composable.PasswordTextField
 import com.pregnancy.edu.common.base.composable.PrimaryButton
 import com.pregnancy.edu.common.base.composable.PrimaryTextField
-import com.pregnancy.edu.common.base.composable.Section
 
 @Preview(showBackground = true)
 @Composable

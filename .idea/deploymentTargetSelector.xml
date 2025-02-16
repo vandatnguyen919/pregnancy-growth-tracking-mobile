@@ -19,12 +19,6 @@
       <SelectionState runConfigName="LoginScreen">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="RegisterScreen">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="OnboardingScreenPreview">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="OnboardingScreen">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>

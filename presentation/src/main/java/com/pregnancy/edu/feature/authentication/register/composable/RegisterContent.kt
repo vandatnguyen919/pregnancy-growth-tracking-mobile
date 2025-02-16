@@ -2,8 +2,6 @@ package com.pregnancy.edu.feature.authentication.register.composable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.base.composable.Section
 import com.pregnancy.edu.feature.authentication.register.event.RegisterEvent
 import com.pregnancy.edu.feature.authentication.register.state.RegisterState

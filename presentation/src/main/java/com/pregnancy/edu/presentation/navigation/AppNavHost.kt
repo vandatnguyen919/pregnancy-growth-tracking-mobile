@@ -1,19 +1,16 @@
 package com.pregnancy.edu.presentation.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.base.composable.ContentArea
 import com.pregnancy.edu.feature.authentication.login.LoginScreen
-import com.pregnancy.edu.feature.onboarding.OnboardingScreen
 import com.pregnancy.edu.feature.authentication.register.RegisterScreen
+import com.pregnancy.edu.feature.onboarding.OnboardingScreen
 
 @Composable
 fun AppNavHost(

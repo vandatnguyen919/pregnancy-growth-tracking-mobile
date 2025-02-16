@@ -15,4 +15,6 @@
     <string name="text_skip">Skip</string>
     <string name="text_get_started">Get Started</string>
     <string name="text_next">Next</string>
+    <string name="error_action">OK</string>
+    <string name="error_title">Whoops</string>
 </resources>

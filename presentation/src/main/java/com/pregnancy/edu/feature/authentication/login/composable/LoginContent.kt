@@ -3,9 +3,7 @@ package com.pregnancy.edu.feature.authentication.login.composable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.base.composable.Section
 import com.pregnancy.edu.feature.authentication.login.event.LoginEvent
 import com.pregnancy.edu.feature.authentication.login.state.LoginState
