@@ -11,18 +11,24 @@ import com.pregnancy.edu.common.base.composable.ContentArea
 import com.pregnancy.edu.feature.authentication.login.LoginScreen
 import com.pregnancy.edu.feature.authentication.register.RegisterScreen
 import com.pregnancy.edu.feature.onboarding.OnboardingScreen
+import com.pregnancy.edu.feature.splashscreen.SplashScreen
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     appState: PregnancyAppState,
-    startDestination: String = Destination.RootOnboarding.route
+    startDestination: String = Destination.Splash.route
 ) {
     NavHost(
         modifier = modifier,
         navController = appState.navController,
         startDestination = startDestination
     ) {
+
+        // Splash screen
+        composable(Destination.Splash.route) {
+            SplashScreen()
+        }
         // Onboarding
         navigation(
             route = Destination.RootOnboarding.route,

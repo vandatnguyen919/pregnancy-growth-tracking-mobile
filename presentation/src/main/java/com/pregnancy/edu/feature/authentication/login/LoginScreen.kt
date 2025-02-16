@@ -95,13 +95,13 @@ fun LoginScreen(
                 }
             )
         }
-        loginState.error?.let { error ->
-            AuthenticationErrorDialog(
-                error = error,
-                dismissError = {
-                    loginViewModel.onTriggerEvent(LoginEvent.ErrorDismissed)
-                }
-            )
-        }
+    }
+    loginState.error?.let { error ->
+        AuthenticationErrorDialog(
+            error = error,
+            dismissError = {
+                loginViewModel.onTriggerEvent(LoginEvent.ErrorDismissed)
+            }
+        )
     }
 }

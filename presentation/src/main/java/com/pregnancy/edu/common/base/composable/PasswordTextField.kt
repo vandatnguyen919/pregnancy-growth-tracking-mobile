@@ -3,6 +3,7 @@ package com.pregnancy.edu.common.base.composable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,12 +22,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pregnancy.edu.R
+import com.pregnancy.edu.common.base.interfaces.KeyboardAction
 
 @Composable
 fun PasswordTextField(
@@ -36,7 +39,8 @@ fun PasswordTextField(
     label: String,
     isError: Boolean = false,
     enabled: Boolean = true,
-    readOnly: Boolean = false
+    readOnly: Boolean = false,
+    keyboardAction: KeyboardAction = KeyboardAction.None
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
 
@@ -55,7 +59,6 @@ fun PasswordTextField(
         readOnly = readOnly,
         isError = isError,
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         trailingIcon = {
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(
@@ -77,6 +80,26 @@ fun PasswordTextField(
             errorLabelColor = MaterialTheme.colorScheme.error,
             cursorColor = Color(0xFFFAACAA)
         ),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = when (keyboardAction) {
+                is KeyboardAction.Next -> ImeAction.Next
+                is KeyboardAction.Done -> ImeAction.Done
+                KeyboardAction.None -> ImeAction.Done
+            }
+        ),
+        keyboardActions = KeyboardActions(
+            onNext = {
+                if (keyboardAction is KeyboardAction.Next) {
+                    keyboardAction.onClick()
+                }
+            },
+            onDone = {
+                if (keyboardAction is KeyboardAction.Done) {
+                    keyboardAction.onClick()
+                }
+            }
+        )
     )
 }

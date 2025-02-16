@@ -17,6 +17,7 @@ sealed class Destination(
 
         fun fromString(route: String): Destination {
             return when (route) {
+                Splash.route -> Splash
                 Onboarding.route -> Onboarding
                 Login.route -> Login
                 Register.route -> Register
@@ -34,6 +35,8 @@ sealed class Destination(
 
         const val ROOT_HOME = "root_home";
     }
+
+    data object Splash: Destination("splash", "Splash")
 
     data object RootOnboarding: Destination(ROOT_ONBOARDING, "Root Onboarding")
 

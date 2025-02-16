@@ -32,7 +32,7 @@ class TokenManager @Inject constructor(
     suspend fun saveTokens(
         accessToken: String,
         refreshToken: String? = null,
-        expiryTime: Long? = null
+        expiryTime: Long? = System.currentTimeMillis() + 2 * 60 * 60 * 1000L
     ) {
         context.dataStore.edit { preferences ->
             preferences[Keys.ACCESS_TOKEN] = accessToken

@@ -1,6 +1,8 @@
 package com.pregnancy.edu.feature.authentication.login
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.pregnancy.data.source.local.TokenManager
 import com.pregnancy.domain.model.User
 import com.pregnancy.domain.usecase.LoginUseCase
 import com.pregnancy.edu.common.base.viewmodel.BaseViewModel
@@ -14,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
 ) : BaseViewModel<LoginEvent, LoginState, LoginViewModelState>(
     initState = LoginViewModelState()
 ) {
@@ -64,7 +66,6 @@ class LoginViewModel @Inject constructor(
                         }
                     }
                 }
-
                 else -> Unit
             }
         }.onFailure {
