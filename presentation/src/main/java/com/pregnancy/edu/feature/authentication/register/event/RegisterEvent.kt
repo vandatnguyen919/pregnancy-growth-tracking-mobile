@@ -15,4 +15,6 @@ sealed class RegisterEvent : ViewEvent {
     class AcceptedTermsChecked(val checked: Boolean) : RegisterEvent()
 
     data object Register : RegisterEvent()
+
+    data object ErrorDismissed : RegisterEvent()
 }

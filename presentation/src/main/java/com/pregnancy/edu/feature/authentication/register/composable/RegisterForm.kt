@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.pregnancy.edu.R
@@ -46,6 +47,7 @@ fun RegisterForm(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val keyboardController = LocalSoftwareKeyboardController.current
         val emailFocusRequester = FocusRequester()
         val passwordFocusRequester = FocusRequester()
         val confirmPasswordFocusRequester = FocusRequester()
@@ -93,6 +95,7 @@ fun RegisterForm(
             value = confirmPassword,
             onValueChange = onConfirmPasswordChange,
             label = stringResource(R.string.label_confirm_password),
+            keyboardAction = KeyboardAction.Done { keyboardController?.hide() }
         )
         TermsCheckbox(
             modifier = Modifier
@@ -108,7 +111,10 @@ fun RegisterForm(
                 .padding(vertical = 16.dp),
             text = stringResource(R.string.text_create_account),
             enabled = enabledRegister,
-            onClick = onRegisterClick,
+            onClick = {
+                keyboardController?.hide()
+                onRegisterClick()
+            },
             containerColor = Color(0xFFFAACAA)
         )
         TextButton(

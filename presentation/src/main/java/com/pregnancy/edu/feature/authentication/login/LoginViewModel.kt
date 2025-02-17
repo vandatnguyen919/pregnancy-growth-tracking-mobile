@@ -68,12 +68,12 @@ class LoginViewModel @Inject constructor(
                 }
                 else -> Unit
             }
-        }.onFailure {
+        }.onFailure { exception ->
             viewModelState.update {
                 it.copy(
                     isLoading = false,
                     isAuthenticated = false,
-                    error = "Authentication failed :("
+                    error = exception.message
                 )
             }
         }

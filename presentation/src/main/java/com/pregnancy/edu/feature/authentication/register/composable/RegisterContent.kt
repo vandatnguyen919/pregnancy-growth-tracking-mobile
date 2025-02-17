@@ -27,7 +27,7 @@ fun RegisterContent(
             onConfirmPasswordChange = { onTriggerEvent(RegisterEvent.ConfirmPasswordChanged(it)) },
             acceptedTerms = registerState.acceptedTerms,
             onAcceptedTermsChange = { onTriggerEvent(RegisterEvent.AcceptedTermsChecked(it)) },
-            enabledRegister = true,
+            enabledRegister = registerState.acceptedTerms,
             onRegisterClick = { onTriggerEvent(RegisterEvent.Register) },
             popUpToLogin = popUpToLogin
         )

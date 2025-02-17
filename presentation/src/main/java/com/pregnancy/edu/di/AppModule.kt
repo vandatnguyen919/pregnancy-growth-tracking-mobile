@@ -6,6 +6,7 @@ import com.pregnancy.data.source.local.TokenManager
 import com.pregnancy.data.source.remote.api.AuthApi
 import com.pregnancy.domain.repository.AuthRepository
 import com.pregnancy.domain.usecase.LoginUseCase
+import com.pregnancy.domain.usecase.RegisterUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +21,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providedLoginUseCase(authRepository: AuthRepository): LoginUseCase {
+    fun provideRegisterUseCase(authRepository: AuthRepository): RegisterUseCase {
+        return RegisterUseCase(authRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginUseCase(authRepository: AuthRepository): LoginUseCase {
         return LoginUseCase(authRepository)
     }
 

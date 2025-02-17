@@ -6,5 +6,6 @@ data class User(
     val email: String? = null,
     val username: String? = null,
     val enabled: Boolean? = false,
+    val verified: Boolean? = false,
     val role: String? = null
 )

@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,6 +51,7 @@ fun LoginForm(
     onAuthenticate: () -> Unit,
     onNavigateToRegister: () -> Unit,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     val passwordFocusRequester = FocusRequester()
 
     Column(
@@ -71,7 +73,7 @@ fun LoginForm(
             value = email,
             onValueChange = onEmailChange,
             label = stringResource(R.string.label_email),
-            keyboardAction = KeyboardAction.Next { passwordFocusRequester.requestFocus()  }
+            keyboardAction = KeyboardAction.Next { passwordFocusRequester.requestFocus() }
         )
         // Password field
         PasswordTextField(
@@ -81,7 +83,12 @@ fun LoginForm(
             value = password,
             onValueChange = onPasswordChange,
             label = stringResource(R.string.label_password),
-            keyboardAction = KeyboardAction.Done { if (enabledLogin) onAuthenticate() }
+            keyboardAction = KeyboardAction.Done {
+                if (enabledLogin) {
+                    keyboardController?.hide()
+                    onAuthenticate()
+                }
+            }
         )
         PrimaryButton(
             modifier = Modifier
@@ -89,7 +96,10 @@ fun LoginForm(
                 .padding(vertical = 16.dp),
             text = stringResource(R.string.title_sign_in),
             enabled = enabledLogin,
-            onClick = onAuthenticate,
+            onClick = {
+                keyboardController?.hide()
+                onAuthenticate()
+            },
             containerColor = Color(0xFFFAACAA)
         )
         CenterAlignedTextDivider(
