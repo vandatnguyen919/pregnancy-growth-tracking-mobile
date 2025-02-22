@@ -1,13 +1,12 @@
 package com.pregnancy.data.repository
 
 import android.util.Base64
-import android.util.Log
 import com.google.gson.Gson
 import com.pregnancy.data.source.local.TokenManager
 import com.pregnancy.data.source.remote.api.AuthApi
 import com.pregnancy.data.source.remote.model.ErrorResponse
 import com.pregnancy.data.source.remote.model.authentication.RegisterRequest
-import com.pregnancy.domain.model.User
+import com.pregnancy.domain.model.authentication.User
 import com.pregnancy.domain.repository.AuthRepository
 import javax.inject.Inject
 

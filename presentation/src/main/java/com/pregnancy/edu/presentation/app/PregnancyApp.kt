@@ -4,7 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -18,11 +21,13 @@ import androidx.navigation.compose.rememberNavController
 import com.pregnancy.data.source.local.TokenManager
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.theme.PregnancyTheme
+import com.pregnancy.edu.feature.blogpost.detail.composables.BlogPostDetailTopAppBar
 import com.pregnancy.edu.presentation.composable.BottomNavigationBar
 import com.pregnancy.edu.presentation.navigation.AppNavHost
 import com.pregnancy.edu.presentation.navigation.PregnancyAppState
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PregnancyApp(
     tokenManager: TokenManager
@@ -45,22 +50,48 @@ fun PregnancyApp(
             }
         }
 
+        val currentRoute = navBackStackEntry.value?.destination?.route ?: ""
+
         val currentDestination by remember(navBackStackEntry) {
             derivedStateOf {
-                navBackStackEntry.value?.destination?.route?.let {
-                    Destination.fromString(it)
-                } ?: run {
-                    Destination.Splash
-                }
+                navBackStackEntry.value?.destination?.route?.let { route ->
+                    // Handle parameterized routes by checking if the route starts with a base route
+                    when {
+                        route.startsWith("${Destination.Blogs.route}/") -> Destination.Blogs
+                        else -> Destination.fromString(route)
+                    }
+                } ?: Destination.Splash
             }
         }
+
         val isShowBottomBar = when (currentDestination.route) {
             Destination.Home.route, Destination.Blogs.route, Destination.Reminder.route, Destination.Profile.route -> true
             else -> false
         }
 
         Scaffold(
-            topBar = { },
+            topBar = {
+                when {
+                    // Show BlogPostDetailTopAppBar when in blog post detail
+                    currentRoute.startsWith("${Destination.Blogs.route}/") -> {
+                        BlogPostDetailTopAppBar(
+                            onBackPressed = { appState.navController.popBackStack() },
+                            onShareClick = { /* Implement share functionality */ },
+                            onBookmarkClick = { /* Implement bookmark functionality */ }
+                        )
+                    }
+                    // Show default top bar only for main bottom nav destinations
+                    isShowBottomBar -> {
+                        CenterAlignedTopAppBar(
+                            title = {
+                                Text("Hello")
+                            }
+                        )
+                    }
+                    // No top bar for other screens
+                    else -> { /* No top bar */ }
+                }
+            },
             content = {
                 Column(
                     modifier = Modifier
@@ -79,7 +110,7 @@ fun PregnancyApp(
                 BottomNavigationBar(
                     currentDestination = currentDestination,
                     onNavigate = { destinationRoute ->
-                        appState.navigate(destinationRoute.route)
+                        appState.navigateToNavigationBar(destinationRoute.route)
                     }
                 )
             }

@@ -1,13 +1,14 @@
 package com.pregnancy.edu.feature.authentication.register
 
 import androidx.lifecycle.viewModelScope
-import com.pregnancy.domain.model.User
+import com.pregnancy.domain.model.authentication.User
 import com.pregnancy.domain.usecase.RegisterUseCase
 import com.pregnancy.edu.common.base.viewmodel.BaseViewModel
 import com.pregnancy.edu.feature.authentication.register.event.RegisterEvent
 import com.pregnancy.edu.feature.authentication.register.state.RegisterState
 import com.pregnancy.edu.feature.authentication.register.state.RegisterViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -53,7 +54,7 @@ class RegisterViewModel @Inject constructor(
     private fun register() {
         viewModelState.update { it.copy(isLoading = true) }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             registerUseCase(
                 fullName = viewModelState.value.fullName ?: "",
                 email = viewModelState.value.email ?: "",

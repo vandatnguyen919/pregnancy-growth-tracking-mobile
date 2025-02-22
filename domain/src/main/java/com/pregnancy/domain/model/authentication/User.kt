@@ -1,4 +1,4 @@
-package com.pregnancy.domain.model
+package com.pregnancy.domain.model.authentication
 
 data class User(
     val id: Long,

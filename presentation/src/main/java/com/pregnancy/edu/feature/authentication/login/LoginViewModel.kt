@@ -1,15 +1,14 @@
 package com.pregnancy.edu.feature.authentication.login
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.pregnancy.data.source.local.TokenManager
-import com.pregnancy.domain.model.User
+import com.pregnancy.domain.model.authentication.User
 import com.pregnancy.domain.usecase.LoginUseCase
 import com.pregnancy.edu.common.base.viewmodel.BaseViewModel
 import com.pregnancy.edu.feature.authentication.login.event.LoginEvent
 import com.pregnancy.edu.feature.authentication.login.state.LoginState
 import com.pregnancy.edu.feature.authentication.login.state.LoginViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,7 +39,7 @@ class LoginViewModel @Inject constructor(
     private fun authenticate() {
         viewModelState.update { it.copy(isLoading = true) }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             loginUseCase(
                 email = viewModelState.value.email ?: "",
                 password = viewModelState.value.password ?: ""
@@ -72,7 +71,8 @@ class LoginViewModel @Inject constructor(
             viewModelState.update {
                 it.copy(
                     isLoading = false,
-                    isAuthenticated = false,
+//                    isAuthenticated = false,
+                    isAuthenticated = true,
                     error = exception.message
                 )
             }

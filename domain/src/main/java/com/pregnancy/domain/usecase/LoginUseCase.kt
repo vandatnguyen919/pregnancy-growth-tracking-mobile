@@ -1,6 +1,6 @@
 package com.pregnancy.domain.usecase
 
-import com.pregnancy.domain.model.User
+import com.pregnancy.domain.model.authentication.User
 import com.pregnancy.domain.repository.AuthRepository
 import javax.inject.Inject
 

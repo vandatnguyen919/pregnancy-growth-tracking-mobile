@@ -1,6 +1,6 @@
 package com.pregnancy.domain.repository
 
-import com.pregnancy.domain.model.User
+import com.pregnancy.domain.model.authentication.User
 
 interface AuthRepository {
 

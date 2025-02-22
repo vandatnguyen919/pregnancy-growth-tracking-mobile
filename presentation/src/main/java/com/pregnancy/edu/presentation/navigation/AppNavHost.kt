@@ -3,13 +3,17 @@ package com.pregnancy.edu.presentation.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.base.composable.ContentArea
 import com.pregnancy.edu.feature.authentication.login.LoginScreen
 import com.pregnancy.edu.feature.authentication.register.RegisterScreen
+import com.pregnancy.edu.feature.blogpost.detail.BlogPostDetailScreen
+import com.pregnancy.edu.feature.blogpost.home.BlogPostScreen
 import com.pregnancy.edu.feature.onboarding.OnboardingScreen
 import com.pregnancy.edu.feature.splashscreen.SplashScreen
 
@@ -29,6 +33,7 @@ fun AppNavHost(
         composable(Destination.Splash.route) {
             SplashScreen()
         }
+
         // Onboarding
         navigation(
             route = Destination.RootOnboarding.route,
@@ -64,10 +69,7 @@ fun AppNavHost(
             }
 
             composable(Destination.Blogs.route) {
-                ContentArea(
-                    modifier = Modifier.fillMaxSize(),
-                    destination = Destination.Blogs
-                )
+                BlogPostScreen(appState = appState)
             }
 
             composable(Destination.Reminder.route) {
@@ -83,6 +85,19 @@ fun AppNavHost(
                     destination = Destination.Profile
                 )
             }
+        }
+
+        composable(
+            route = "${Destination.Blogs.route}/{blogPostId}",
+            arguments = listOf(
+                navArgument("blogPostId") { type = NavType.StringType },
+            )
+        ) { navBackStackEntry ->
+            val blogPostId = navBackStackEntry.arguments?.getString("blogPostId") ?: return@composable
+            BlogPostDetailScreen(
+                appState = appState,
+                blogPostId = blogPostId.toLong()
+            )
         }
     }
 }

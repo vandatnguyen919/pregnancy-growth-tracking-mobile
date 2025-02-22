@@ -1,7 +1,7 @@
 package com.pregnancy.data.source.remote.model.authentication
 
 import com.google.gson.annotations.SerializedName
-import com.pregnancy.domain.model.User
+import com.pregnancy.domain.model.authentication.User
 
 data class UserDto(
     @SerializedName("id")

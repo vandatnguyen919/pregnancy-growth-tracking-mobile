@@ -17,4 +17,7 @@
     <string name="text_next">Next</string>
     <string name="error_action">OK</string>
     <string name="error_title">Whoops</string>
+    <string name="cd_other_blog_posts">Other Blogs</string>
+    <string name="cd_just_for_you">Just For You</string>
+    <string name="cd_latest_blogs">Latest Blogs</string>
 </resources>
