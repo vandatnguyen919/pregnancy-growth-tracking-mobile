@@ -75,6 +75,7 @@ class RegisterViewModel @Inject constructor(
                     if (result is User) {
                         viewModelState.update {
                             it.copy(
+                                isRegisterSuccess = true,
                                 isLoading = false,
                                 error = null
                             )

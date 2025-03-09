@@ -49,6 +49,8 @@ dependencies {
     // DataStore for Data Persistence
     implementation("androidx.datastore:datastore-preferences:1.1.2")
 
+    // Paging 3
+    implementation("androidx.paging:paging-runtime-ktx:3.3.6")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

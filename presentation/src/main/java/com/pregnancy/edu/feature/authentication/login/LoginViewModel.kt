@@ -71,8 +71,8 @@ class LoginViewModel @Inject constructor(
             viewModelState.update {
                 it.copy(
                     isLoading = false,
-//                    isAuthenticated = false,
-                    isAuthenticated = true,
+                    isAuthenticated = false,
+//                    isAuthenticated = true,
                     error = exception.message
                 )
             }

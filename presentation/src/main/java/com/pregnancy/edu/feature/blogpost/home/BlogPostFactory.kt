@@ -1,5 +1,6 @@
 package com.pregnancy.edu.feature.blogpost.home
 
+import com.pregnancy.domain.model.authentication.User
 import com.pregnancy.domain.model.blogpost.BlogPost
 
 object BlogPostFactory {
@@ -14,7 +15,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 12,
-                likeQuantity = 45
+                likeQuantity = 45,
+                nameTags = emptyList(),
+                user = User(id = 1)
             ),
             BlogPost(
                 id = 2L,
@@ -25,7 +28,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 8,
-                likeQuantity = 30
+                likeQuantity = 30,
+                nameTags = emptyList(),
+                user = User(id = 1)
             ),
             BlogPost(
                 id = 3L,
@@ -36,7 +41,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 5,
-                likeQuantity = 20
+                likeQuantity = 20,
+                nameTags = emptyList(),
+                user = User(id = 1)
             ),
             BlogPost(
                 id = 4L,
@@ -47,7 +54,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 15,
-                likeQuantity = 50
+                likeQuantity = 50,
+                nameTags = emptyList(),
+                user = User(id = 1)
             ),
             BlogPost(
                 id = 5L,
@@ -58,7 +67,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 10,
-                likeQuantity = 35
+                likeQuantity = 35,
+                nameTags = emptyList(),
+                user = User(id = 1)
             ),
             BlogPost(
                 id = 6L,
@@ -69,7 +80,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 20,
-                likeQuantity = 60
+                likeQuantity = 60,
+                nameTags = emptyList(),
+                user = User(id = 1)
             ),
             BlogPost(
                 id = 7L,
@@ -80,7 +93,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 7,
-                likeQuantity = 25
+                likeQuantity = 25,
+                nameTags = emptyList(),
+                user = User(id = 1)
             ),
             BlogPost(
                 id = 8L,
@@ -91,7 +106,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 6,
-                likeQuantity = 18
+                likeQuantity = 18,
+                nameTags = emptyList(),
+                user = User(id = 1)
             ),
             BlogPost(
                 id = 9L,
@@ -102,7 +119,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 14,
-                likeQuantity = 40
+                likeQuantity = 40,
+                nameTags = emptyList(),
+                user = User(id = 1)
             ),
             BlogPost(
                 id = 10L,
@@ -113,7 +132,9 @@ object BlogPostFactory {
                 featuredImageUrl = "https://img.freepik.com/free-photo/bright-neon-colors-shining-wild-chameleon_23-2151682804.jpg",
                 isVisible = true,
                 commentQuantity = 9,
-                likeQuantity = 28
+                likeQuantity = 28,
+                nameTags = emptyList(),
+                user = User(id = 1)
             )
         )
     }

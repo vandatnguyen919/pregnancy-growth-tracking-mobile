@@ -16,24 +16,25 @@ sealed class Destination(
     companion object {
 
         fun fromString(route: String): Destination {
-            return when (route) {
-                Splash.route -> Splash
-                Onboarding.route -> Onboarding
-                Login.route -> Login
-                Register.route -> Register
-                Home.route -> Home
-                Blogs.route -> Blogs
-                Reminder.route -> Reminder
-                Profile.route -> Profile
+            return when {
+                route == Splash.route -> Splash
+                route == Onboarding.route -> Onboarding
+                route == Login.route -> Login
+                route == Register.route -> Register
+                route.startsWith(Otp.route) -> Otp
+                route == Home.route -> Home
+                route.startsWith(Blogs.route) -> Blogs
+                route == Reminder.route -> Reminder
+                route == Profile.route -> Profile
                 else -> Home
             }
         }
 
-        const val ROOT_ONBOARDING = "root_onboarding";
+        private const val ROOT_ONBOARDING = "root_onboarding";
 
-        const val ROOT_AUTH = "root_auth";
+        private const val ROOT_AUTH = "root_auth";
 
-        const val ROOT_HOME = "root_home";
+        private const val ROOT_HOME = "root_home";
     }
 
     data object Splash: Destination("splash", "Splash")
@@ -47,6 +48,8 @@ sealed class Destination(
     data object Login: Destination("${ROOT_AUTH}/login", "Login")
 
     data object Register: Destination("${ROOT_AUTH}/register", "Register")
+
+    data object Otp: Destination("${ROOT_AUTH}/otp", "Otp")
 
     data object RootHome: Destination(ROOT_HOME, "Root Home")
 

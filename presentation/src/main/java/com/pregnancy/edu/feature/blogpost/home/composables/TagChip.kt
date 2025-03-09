@@ -11,13 +11,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TagChip(tag: String) {
+fun TagChip(
+    modifier: Modifier = Modifier,
+    text: String
+) {
     Surface(
+        modifier = modifier,
         color = Color(0x33AAAAAA), // Semi-transparent gray
         shape = RoundedCornerShape(16.dp)
     ) {
         Text(
-            text = tag,
+            text = text,
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
             color = Color.Black,
             fontSize = 12.sp

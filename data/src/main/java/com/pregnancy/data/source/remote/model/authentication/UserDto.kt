@@ -17,7 +17,7 @@ data class UserDto(
     @SerializedName("role")
     val role: String
 ) {
-    fun toUser() = User(
+    fun toDomain() = User(
         id = id,
         fullName = fullName,
         email = email,

@@ -54,7 +54,7 @@ fun CompactArticleCard(
             .fillMaxWidth()
             .background(Color.White)
             .clickable { onBlogPostClick(blogPost.id) }
-            .padding(horizontal = 12.dp)
+            .padding(horizontal = 16.dp)
     ) {
         val (heading, image, divider) = createRefs()
 
@@ -90,8 +90,8 @@ fun CompactArticleCard(
                 .build(),
             contentDescription = blogPost.pageTitle ?: "",
             contentScale = ContentScale.Crop,
-            placeholder = painterResource(id = R.drawable.ic_launcher_background),
-            error = painterResource(id = R.drawable.ic_launcher_background)
+            placeholder = painterResource(id = R.drawable.img_placeholder),
+            error = painterResource(id = R.drawable.img_placeholder)
         )
         Box(
             modifier = Modifier

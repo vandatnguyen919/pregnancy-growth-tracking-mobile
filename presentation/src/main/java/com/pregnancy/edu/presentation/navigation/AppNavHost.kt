@@ -1,5 +1,6 @@
 package com.pregnancy.edu.presentation.navigation
 
+import ReminderScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,11 +11,13 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.base.composable.ContentArea
+import com.pregnancy.edu.feature.authentication.addAuthenticationNavigation
 import com.pregnancy.edu.feature.authentication.login.LoginScreen
 import com.pregnancy.edu.feature.authentication.register.RegisterScreen
 import com.pregnancy.edu.feature.blogpost.detail.BlogPostDetailScreen
 import com.pregnancy.edu.feature.blogpost.home.BlogPostScreen
 import com.pregnancy.edu.feature.onboarding.OnboardingScreen
+import com.pregnancy.edu.feature.reminder.add.AddReminderScreen
 import com.pregnancy.edu.feature.splashscreen.SplashScreen
 
 @Composable
@@ -49,12 +52,7 @@ fun AppNavHost(
             route = Destination.RootAuth.route,
             startDestination = Destination.Login.route
         ) {
-            composable(Destination.Login.route) {
-                LoginScreen(appState = appState)
-            }
-            composable(Destination.Register.route) {
-                RegisterScreen(appState = appState)
-            }
+            addAuthenticationNavigation(appState = appState)
         }
 
         navigation(
@@ -73,10 +71,7 @@ fun AppNavHost(
             }
 
             composable(Destination.Reminder.route) {
-                ContentArea(
-                    modifier = Modifier.fillMaxSize(),
-                    destination = Destination.Reminder
-                )
+                ReminderScreen(appState = appState)
             }
 
             composable(Destination.Profile.route) {
@@ -98,6 +93,12 @@ fun AppNavHost(
                 appState = appState,
                 blogPostId = blogPostId.toLong()
             )
+        }
+
+        composable(
+            route = "test"
+        ) {
+            AddReminderScreen()
         }
     }
 }

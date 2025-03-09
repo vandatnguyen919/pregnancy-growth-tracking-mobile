@@ -72,8 +72,8 @@ fun MediumArticleCard(
                 .fillMaxWidth()
                 .height(120.dp),
             contentScale = ContentScale.Crop,
-            placeholder = painterResource(id = R.drawable.ic_launcher_background),
-            error = painterResource(id = R.drawable.ic_launcher_background)
+            placeholder = painterResource(id = R.drawable.img_placeholder),
+            error = painterResource(id = R.drawable.img_placeholder)
         )
         
         Spacer(modifier = Modifier.height(8.dp))
@@ -130,7 +130,7 @@ fun MediumArticleCard(
             )
             
             Text(
-                text = blogPost.authorName ?: "",
+                text = blogPost.user?.fullName ?: "",
                 color = Color.Gray,
                 fontSize = 12.sp,
                 maxLines = 1,

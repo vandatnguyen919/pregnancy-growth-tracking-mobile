@@ -20,4 +20,8 @@
     <string name="cd_other_blog_posts">Other Blogs</string>
     <string name="cd_just_for_you">Just For You</string>
     <string name="cd_latest_blogs">Latest Blogs</string>
+    <string name="cd_search_reminder">Search Reminders</string>
+    <string name="cd_search">Search</string>
+    <string name="cd_today">Today</string>
+    <string name="cd_tomorrow">Tomorrow</string>
 </resources>

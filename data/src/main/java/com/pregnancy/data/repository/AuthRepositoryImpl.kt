@@ -14,6 +14,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val api: AuthApi,
     private val tokenManager: TokenManager
 ) : AuthRepository {
+
     override suspend fun login(email: String, password: String): Result<User> {
         return try {
             // Create Basic Auth header
@@ -26,7 +27,7 @@ class AuthRepositoryImpl @Inject constructor(
                 response.body()?.let { res ->
                     // Save token
                     tokenManager.saveTokens(res.data.token)
-                    Result.success(res.data.userDto.toUser())
+                    Result.success(res.data.userDto.toDomain())
                 } ?: Result.failure(Exception("Empty response body"))
             } else {
                 val errorBody = response.errorBody()?.string()
@@ -56,8 +57,40 @@ class AuthRepositoryImpl @Inject constructor(
 
             if (response.isSuccessful) {
                 response.body()?.let { res ->
-                    Result.success(res.data.toUser())
+                    Result.success(res.data.toDomain())
                 } ?: Result.failure(Exception("Empty response body"))
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMessage = parseErrorResponse(errorBody)
+                Result.failure(Exception(errorMessage))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun sendOtp(email: String): Result<Any> {
+        return try {
+            val response = api.generateOtp(email)
+
+            if (response.isSuccessful) {
+                Result.success(response.body()?.data ?: Any())
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMessage = parseErrorResponse(errorBody)
+                Result.failure(Exception(errorMessage))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun validateEmail(email: String, otp: String): Result<Any> {
+        return try {
+            val response = api.validateEmail(email, otp)
+
+            if (response.isSuccessful) {
+                Result.success(response.body()?.data ?: Any())
             } else {
                 val errorBody = response.errorBody()?.string()
                 val errorMessage = parseErrorResponse(errorBody)

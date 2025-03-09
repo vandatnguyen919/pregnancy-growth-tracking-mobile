@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.pregnancy.domain.model.blogpost.BlogPost
-import com.pregnancy.edu.feature.blogpost.detail.FlowRow
+import com.pregnancy.edu.feature.blogpost.home.composables.TagChip
 
 @Composable
 fun BlogPostDetailContent(
@@ -54,46 +54,38 @@ fun BlogPostDetailContent(
             // Article Metadata
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    AsyncImage(
-                        model = "https://placeholder.com/40x40",
-                        contentDescription = "Author avatar",
-                        modifier = Modifier
-                            .size(40.dp)
-                            .padding(end = 8.dp)
-                    )
-                    Column {
-                        Text(
-                            text = "John Doe",
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "Feb 22, 2025 · 5 min read",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-
-                AssistChip(
-                    onClick = { /* Handle category click */ },
-                    label = { Text("Technology") },
-                    leadingIcon = {
-                        Icon(
-                            Icons.Default.Share,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
+                AsyncImage(
+                    model = "https://placeholder.com/40x40",
+                    contentDescription = "Author avatar",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(end = 8.dp)
                 )
+                Column {
+                    Text(
+                        text = blogPost.user?.fullName ?: "",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "Feb 22, 2025 · 5 min read",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
-
             Spacer(modifier = Modifier.height(16.dp))
-
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                blogPost.nameTags.forEach { tag ->
+                    TagChip(text = tag)
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
             // Article Title
             Text(
                 text = blogPost.heading ?: "",
@@ -108,29 +100,6 @@ fun BlogPostDetailContent(
                 text = blogPost.content ?: "",
                 style = MaterialTheme.typography.bodyLarge
             )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-//            // Tags Section
-//            Text(
-//                text = "Related Topics",
-//                style = MaterialTheme.typography.titleMedium,
-//                fontWeight = FontWeight.Bold
-//            )
-//
-//            Spacer(modifier = Modifier.height(8.dp))
-//
-//            FlowRow(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.spacedBy(8.dp)
-//            ) {
-//                listOf("Android", "Kotlin", "UI/UX", "Mobile Development").forEach { tag ->
-//                    SuggestionChip(
-//                        onClick = { /* Handle tag click */ },
-//                        label = { Text(tag) }
-//                    )
-//                }
-//            }
         }
     }
 }

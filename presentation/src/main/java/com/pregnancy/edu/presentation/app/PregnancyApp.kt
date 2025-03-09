@@ -4,8 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -55,11 +60,7 @@ fun PregnancyApp(
         val currentDestination by remember(navBackStackEntry) {
             derivedStateOf {
                 navBackStackEntry.value?.destination?.route?.let { route ->
-                    // Handle parameterized routes by checking if the route starts with a base route
-                    when {
-                        route.startsWith("${Destination.Blogs.route}/") -> Destination.Blogs
-                        else -> Destination.fromString(route)
-                    }
+                    Destination.fromString(route)
                 } ?: Destination.Splash
             }
         }
@@ -68,6 +69,8 @@ fun PregnancyApp(
             Destination.Home.route, Destination.Blogs.route, Destination.Reminder.route, Destination.Profile.route -> true
             else -> false
         }
+
+        val isReminderScreen = currentDestination.route == Destination.Reminder.route
 
         Scaffold(
             topBar = {
@@ -84,12 +87,27 @@ fun PregnancyApp(
                     isShowBottomBar -> {
                         CenterAlignedTopAppBar(
                             title = {
-                                Text("Hello")
+                                Text(currentDestination.title)
                             }
                         )
                     }
                     // No top bar for other screens
-                    else -> { /* No top bar */ }
+                    else -> { /* No top bar */
+                    }
+                }
+            },
+            floatingActionButton = {
+                if (isReminderScreen) {
+                    FloatingActionButton(
+                        onClick = { appState.navigate("test")},
+                        containerColor = Color(0xFFFAACAA),
+                        contentColor = Color.White
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Add,
+                            contentDescription = "Add Reminder"
+                        )
+                    }
                 }
             },
             content = {

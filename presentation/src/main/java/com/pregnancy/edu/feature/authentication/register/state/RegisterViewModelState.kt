@@ -10,6 +10,7 @@ data class RegisterViewModelState(
     val confirmPassword: String? = null,
     val acceptedTerms: Boolean = false,
     val isLoading: Boolean = false,
+    val isRegisterSuccess: Boolean = false,
     val error: String? = null
 ) : ViewModelState() {
 
@@ -20,6 +21,7 @@ data class RegisterViewModelState(
             password = password,
             confirmPassword = confirmPassword,
             acceptedTerms = acceptedTerms,
+            isRegisterSuccess = isRegisterSuccess,
             isLoading = isLoading,
             error = error
         )

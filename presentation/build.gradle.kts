@@ -64,6 +64,10 @@ dependencies {
     // Constraint Layout Compose
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
 
+    // Paging 3
+    implementation("androidx.paging:paging-runtime:3.3.6") // Paging for ViewModel
+    implementation("androidx.paging:paging-compose:3.2.1") // Paging for Jetpack Compose
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

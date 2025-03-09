@@ -13,5 +13,6 @@ data class RegisterState(
     val confirmPasswordError: Boolean = true,
     val acceptedTerms: Boolean = false,
     val isLoading: Boolean = false,
+    val isRegisterSuccess: Boolean = false,
     val error: String? = null
 ) : ViewState()

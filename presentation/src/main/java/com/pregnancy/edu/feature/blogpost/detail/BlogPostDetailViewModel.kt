@@ -1,18 +1,21 @@
 package com.pregnancy.edu.feature.blogpost.detail
 
 import androidx.lifecycle.viewModelScope
+import com.pregnancy.domain.usecase.GetBlogPostUseCase
 import com.pregnancy.edu.common.base.viewmodel.BaseViewModel
 import com.pregnancy.edu.feature.blogpost.detail.event.BlogPostDetailEvent
 import com.pregnancy.edu.feature.blogpost.detail.state.BlogPostDetailState
 import com.pregnancy.edu.feature.blogpost.detail.state.BlogPostDetailViewModelState
 import com.pregnancy.edu.feature.blogpost.home.BlogPostFactory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class BlogPostDetailViewModel @Inject constructor(
-
+    private val getBlogPostUseCase: GetBlogPostUseCase
 ) : BaseViewModel<BlogPostDetailEvent, BlogPostDetailState, BlogPostDetailViewModelState>(
     initState = BlogPostDetailViewModelState()
 ) {
@@ -26,11 +29,14 @@ class BlogPostDetailViewModel @Inject constructor(
     }
 
     private fun loadBlogPost(blogPostId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            viewModelState.update { it ->
-//                it.copy(blogPost = getBlogPostUseCase(blogPostId))
-                val blogPost = BlogPostFactory.createBlogPosts().find { it.id == blogPostId }
-                it.copy(blogPost = blogPost)
+        viewModelScope.launch {
+            viewModelState.update { it.copy(isLoading = true) }
+
+            val result = getBlogPostUseCase(blogPostId)
+            result.onSuccess { blogPost ->
+                viewModelState.update { it.copy(blogPost = blogPost, isLoading = false, error = null) }
+            }.onFailure { error ->
+                viewModelState.update { it.copy(isLoading = false, error = error.localizedMessage ?: "Unknown error") }
             }
         }
     }

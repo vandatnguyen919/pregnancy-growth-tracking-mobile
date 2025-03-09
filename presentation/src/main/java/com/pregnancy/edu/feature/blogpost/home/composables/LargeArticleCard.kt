@@ -69,8 +69,8 @@ fun LargeArticleCard(
                 .fillMaxWidth()
                 .height(200.dp),
             contentScale = ContentScale.Crop,
-            placeholder = painterResource(id = R.drawable.ic_launcher_background),
-            error = painterResource(id = R.drawable.ic_launcher_background)
+            placeholder = painterResource(id = R.drawable.img_placeholder),
+            error = painterResource(id = R.drawable.img_placeholder)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -91,7 +91,7 @@ fun LargeArticleCard(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             blogPost.nameTags.take(3).forEach { tag ->
-                TagChip(tag = tag)
+                TagChip(text = tag)
             }
         }
 
@@ -135,7 +135,7 @@ fun LargeArticleCard(
             )
 
             Text(
-                text = blogPost.authorName ?: "",
+                text = blogPost.user?.fullName ?: "",
                 color = Color.Gray,
                 fontSize = 14.sp
             )

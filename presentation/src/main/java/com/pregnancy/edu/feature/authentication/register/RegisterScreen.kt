@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +37,13 @@ fun RegisterScreen(
     registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
     val registerState by registerViewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(registerState.isRegisterSuccess) {
+        if (registerState.isRegisterSuccess) {
+            appState.clearAndNavigate("${Destination.Otp.route}/${registerState.email}")
+        }
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
