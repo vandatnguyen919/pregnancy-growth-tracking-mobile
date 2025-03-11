@@ -1,8 +1,8 @@
 package com.pregnancy.edu.feature.authentication.otp
 
 import androidx.lifecycle.viewModelScope
-import com.pregnancy.domain.usecase.SendOtpUseCase
-import com.pregnancy.domain.usecase.ValidateEmailUseCase
+import com.pregnancy.domain.usecase.auth.SendOtpUseCase
+import com.pregnancy.domain.usecase.auth.ValidateEmailUseCase
 import com.pregnancy.edu.common.base.viewmodel.BaseViewModel
 import com.pregnancy.edu.feature.authentication.otp.event.OtpEvent
 import com.pregnancy.edu.feature.authentication.otp.state.OtpState

@@ -9,6 +9,7 @@ import com.pregnancy.data.source.remote.api.BlogApiService
 import com.pregnancy.data.source.remote.model.ErrorResponse
 import com.pregnancy.data.source.remote.model.authentication.RegisterRequest
 import com.pregnancy.data.source.remote.paging.BlogPagingSource
+import com.pregnancy.data.source.remote.parseErrorResponse
 import com.pregnancy.domain.model.blogpost.BlogPost
 import com.pregnancy.domain.repository.BlogRepository
 import kotlinx.coroutines.flow.Flow
@@ -70,18 +71,6 @@ class BlogRepositoryImpl(
             }
         } catch (e: Exception) {
             Result.failure(e)
-        }
-    }
-
-    private fun parseErrorResponse(errorBody: String?): String {
-        return try {
-            errorBody?.let {
-                val errorResponse = Gson().fromJson(it, ErrorResponse::class.java)
-                // Return the most specific error message available
-                errorResponse.data ?: errorResponse.message
-            } ?: "Unknown error occurred"
-        } catch (e: Exception) {
-            "Failed to parse error response"
         }
     }
 }

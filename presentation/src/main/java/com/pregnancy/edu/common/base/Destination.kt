@@ -25,7 +25,7 @@ sealed class Destination(
                 route == Home.route -> Home
                 route.startsWith(Blogs.route) -> Blogs
                 route == Reminder.route -> Reminder
-                route == Profile.route -> Profile
+                route.startsWith(Profile.route) -> Profile
                 else -> Home
             }
         }
@@ -35,6 +35,8 @@ sealed class Destination(
         private const val ROOT_AUTH = "root_auth";
 
         private const val ROOT_HOME = "root_home";
+
+        private const val ROOT_PROFILE = "root_profile"
     }
 
     data object Splash: Destination("splash", "Splash")
@@ -59,7 +61,11 @@ sealed class Destination(
 
     data object Reminder: Destination("${ROOT_HOME}/reminder", "Reminder", Icons.Default.Notifications)
 
-    data object Profile: Destination("${ROOT_HOME}/profile", "Profile", Icons.Default.Person)
+    data object Profile: Destination(ROOT_PROFILE, "Profile", Icons.Default.Person)
+
+    data object HomeProfile: Destination("${ROOT_PROFILE}/home", "Home Profile")
+
+    data object ProfileDetail: Destination("${ROOT_PROFILE}/detail", "Profile Detail", isRootDestination = false)
 
 //    data object Settings: Destination("settings", "Settings", Icons.Default.Settings, isRootDestination = false)
 //

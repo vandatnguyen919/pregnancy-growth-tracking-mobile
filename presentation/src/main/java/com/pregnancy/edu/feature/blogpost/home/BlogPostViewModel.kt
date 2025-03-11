@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.pregnancy.domain.model.blogpost.BlogPost
-import com.pregnancy.domain.usecase.GetBlogPostsUseCase
+import com.pregnancy.domain.usecase.blogpost.GetBlogPostsUseCase
 import com.pregnancy.edu.common.base.viewmodel.BaseViewModel
 import com.pregnancy.edu.feature.blogpost.home.event.BlogPostEvent
 import com.pregnancy.edu.feature.blogpost.home.state.BlogPostState

@@ -4,16 +4,17 @@ import android.content.Context
 import com.pregnancy.data.repository.AuthRepositoryImpl
 import com.pregnancy.data.repository.BlogRepositoryImpl
 import com.pregnancy.data.source.local.TokenManager
-import com.pregnancy.data.source.remote.api.AuthApi
+import com.pregnancy.data.source.remote.api.AuthApiService
 import com.pregnancy.data.source.remote.api.BlogApiService
 import com.pregnancy.domain.repository.AuthRepository
 import com.pregnancy.domain.repository.BlogRepository
-import com.pregnancy.domain.usecase.GetBlogPostUseCase
-import com.pregnancy.domain.usecase.GetBlogPostsUseCase
-import com.pregnancy.domain.usecase.LoginUseCase
-import com.pregnancy.domain.usecase.RegisterUseCase
-import com.pregnancy.domain.usecase.SendOtpUseCase
-import com.pregnancy.domain.usecase.ValidateEmailUseCase
+import com.pregnancy.domain.usecase.auth.GetMyProfileUseCase
+import com.pregnancy.domain.usecase.blogpost.GetBlogPostUseCase
+import com.pregnancy.domain.usecase.blogpost.GetBlogPostsUseCase
+import com.pregnancy.domain.usecase.auth.LoginUseCase
+import com.pregnancy.domain.usecase.auth.RegisterUseCase
+import com.pregnancy.domain.usecase.auth.SendOtpUseCase
+import com.pregnancy.domain.usecase.auth.ValidateEmailUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,14 +59,20 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(authApi: AuthApi, tokenManager: TokenManager): AuthRepository {
-        return AuthRepositoryImpl(authApi, tokenManager)
+    fun provideGetMyProfileUseCase(authRepository: AuthRepository): GetMyProfileUseCase {
+        return GetMyProfileUseCase(authRepository)
     }
 
     @Provides
     @Singleton
-    fun provideAuthApi(retrofit: Retrofit): AuthApi {
-        return retrofit.create(AuthApi::class.java)
+    fun provideAuthRepository(authApiService: AuthApiService, tokenManager: TokenManager): AuthRepository {
+        return AuthRepositoryImpl(authApiService, tokenManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthApi(retrofit: Retrofit): AuthApiService {
+        return retrofit.create(AuthApiService::class.java)
     }
 
     @Provides

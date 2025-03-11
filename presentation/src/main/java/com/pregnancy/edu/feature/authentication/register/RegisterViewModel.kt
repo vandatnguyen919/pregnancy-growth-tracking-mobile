@@ -2,7 +2,7 @@ package com.pregnancy.edu.feature.authentication.register
 
 import androidx.lifecycle.viewModelScope
 import com.pregnancy.domain.model.authentication.User
-import com.pregnancy.domain.usecase.RegisterUseCase
+import com.pregnancy.domain.usecase.auth.RegisterUseCase
 import com.pregnancy.edu.common.base.viewmodel.BaseViewModel
 import com.pregnancy.edu.feature.authentication.register.event.RegisterEvent
 import com.pregnancy.edu.feature.authentication.register.state.RegisterState

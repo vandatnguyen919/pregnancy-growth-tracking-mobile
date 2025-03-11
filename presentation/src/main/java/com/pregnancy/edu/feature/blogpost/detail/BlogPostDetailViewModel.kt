@@ -1,14 +1,12 @@
 package com.pregnancy.edu.feature.blogpost.detail
 
 import androidx.lifecycle.viewModelScope
-import com.pregnancy.domain.usecase.GetBlogPostUseCase
+import com.pregnancy.domain.usecase.blogpost.GetBlogPostUseCase
 import com.pregnancy.edu.common.base.viewmodel.BaseViewModel
 import com.pregnancy.edu.feature.blogpost.detail.event.BlogPostDetailEvent
 import com.pregnancy.edu.feature.blogpost.detail.state.BlogPostDetailState
 import com.pregnancy.edu.feature.blogpost.detail.state.BlogPostDetailViewModelState
-import com.pregnancy.edu.feature.blogpost.home.BlogPostFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,9 +27,8 @@ class BlogPostDetailViewModel @Inject constructor(
     }
 
     private fun loadBlogPost(blogPostId: Long) {
+        viewModelState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            viewModelState.update { it.copy(isLoading = true) }
-
             val result = getBlogPostUseCase(blogPostId)
             result.onSuccess { blogPost ->
                 viewModelState.update { it.copy(blogPost = blogPost, isLoading = false, error = null) }

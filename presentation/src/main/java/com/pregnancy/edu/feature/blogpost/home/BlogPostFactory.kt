@@ -17,7 +17,7 @@ object BlogPostFactory {
                 commentQuantity = 12,
                 likeQuantity = 45,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             ),
             BlogPost(
                 id = 2L,
@@ -30,7 +30,7 @@ object BlogPostFactory {
                 commentQuantity = 8,
                 likeQuantity = 30,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             ),
             BlogPost(
                 id = 3L,
@@ -43,7 +43,7 @@ object BlogPostFactory {
                 commentQuantity = 5,
                 likeQuantity = 20,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             ),
             BlogPost(
                 id = 4L,
@@ -56,7 +56,7 @@ object BlogPostFactory {
                 commentQuantity = 15,
                 likeQuantity = 50,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             ),
             BlogPost(
                 id = 5L,
@@ -69,7 +69,7 @@ object BlogPostFactory {
                 commentQuantity = 10,
                 likeQuantity = 35,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             ),
             BlogPost(
                 id = 6L,
@@ -82,7 +82,7 @@ object BlogPostFactory {
                 commentQuantity = 20,
                 likeQuantity = 60,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             ),
             BlogPost(
                 id = 7L,
@@ -95,7 +95,7 @@ object BlogPostFactory {
                 commentQuantity = 7,
                 likeQuantity = 25,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             ),
             BlogPost(
                 id = 8L,
@@ -108,7 +108,7 @@ object BlogPostFactory {
                 commentQuantity = 6,
                 likeQuantity = 18,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             ),
             BlogPost(
                 id = 9L,
@@ -121,7 +121,7 @@ object BlogPostFactory {
                 commentQuantity = 14,
                 likeQuantity = 40,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             ),
             BlogPost(
                 id = 10L,
@@ -134,7 +134,7 @@ object BlogPostFactory {
                 commentQuantity = 9,
                 likeQuantity = 28,
                 nameTags = emptyList(),
-                user = User(id = 1)
+                user = null
             )
         )
     }

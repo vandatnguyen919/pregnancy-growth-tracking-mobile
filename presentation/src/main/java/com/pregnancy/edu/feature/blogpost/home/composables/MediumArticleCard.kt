@@ -112,22 +112,22 @@ fun MediumArticleCard(
                 fontSize = 12.sp
             )
             
-            Icon(
-                imageVector = Icons.Default.Notifications,
-                contentDescription = "Comment",
-                tint = Color.Gray,
-                modifier = Modifier.size(16.dp)
-            )
-            Text(
-                text = blogPost.commentQuantity.toString(),
-                color = Color.Gray,
-                fontSize = 14.sp
-            )
-            Text(
-                text = "•",
-                color = Color.Gray,
-                fontSize = 12.sp
-            )
+//            Icon(
+//                imageVector = Icons.Default.Notifications,
+//                contentDescription = "Comment",
+//                tint = Color.Gray,
+//                modifier = Modifier.size(16.dp)
+//            )
+//            Text(
+//                text = blogPost.commentQuantity.toString(),
+//                color = Color.Gray,
+//                fontSize = 14.sp
+//            )
+//            Text(
+//                text = "•",
+//                color = Color.Gray,
+//                fontSize = 12.sp
+//            )
             
             Text(
                 text = blogPost.user?.fullName ?: "",

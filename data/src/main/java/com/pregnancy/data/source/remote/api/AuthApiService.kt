@@ -12,7 +12,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface AuthApi {
+interface AuthApiService {
 
     @POST("${ApiConstants.AUTH_PATH}/login")
     suspend fun login(
@@ -23,6 +23,9 @@ interface AuthApi {
     suspend fun register(
         @Body registerRequest: RegisterRequest
     ): Response<ApiResponse<UserDto>>
+
+    @GET("${ApiConstants.AUTH_PATH}/profile")
+    suspend fun getMyProfile(): Response<ApiResponse<UserDto>>
 
     @POST("${ApiConstants.OTP_PATH}/generate")
     suspend fun generateOtp(

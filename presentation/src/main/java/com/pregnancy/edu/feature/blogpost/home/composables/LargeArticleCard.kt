@@ -117,22 +117,22 @@ fun LargeArticleCard(
                 color = Color.Gray,
                 fontSize = 14.sp
             )
-            Icon(
-                imageVector = Icons.Default.Notifications,
-                contentDescription = "Comment",
-                tint = Color.Gray,
-                modifier = Modifier.size(18.dp)
-            )
-            Text(
-                text = blogPost.commentQuantity.toString(),
-                color = Color.Gray,
-                fontSize = 14.sp
-            )
-            Text(
-                text = "•",
-                color = Color.Gray,
-                fontSize = 14.sp
-            )
+//            Icon(
+//                imageVector = Icons.Default.Notifications,
+//                contentDescription = "Comment",
+//                tint = Color.Gray,
+//                modifier = Modifier.size(18.dp)
+//            )
+//            Text(
+//                text = blogPost.commentQuantity.toString(),
+//                color = Color.Gray,
+//                fontSize = 14.sp
+//            )
+//            Text(
+//                text = "•",
+//                color = Color.Gray,
+//                fontSize = 14.sp
+//            )
 
             Text(
                 text = blogPost.user?.fullName ?: "",

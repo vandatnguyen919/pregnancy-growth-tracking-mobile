@@ -12,11 +12,10 @@ import androidx.navigation.navigation
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.common.base.composable.ContentArea
 import com.pregnancy.edu.feature.authentication.addAuthenticationNavigation
-import com.pregnancy.edu.feature.authentication.login.LoginScreen
-import com.pregnancy.edu.feature.authentication.register.RegisterScreen
 import com.pregnancy.edu.feature.blogpost.detail.BlogPostDetailScreen
 import com.pregnancy.edu.feature.blogpost.home.BlogPostScreen
 import com.pregnancy.edu.feature.onboarding.OnboardingScreen
+import com.pregnancy.edu.feature.profile.addProfileGraph
 import com.pregnancy.edu.feature.reminder.add.AddReminderScreen
 import com.pregnancy.edu.feature.splashscreen.SplashScreen
 
@@ -74,11 +73,11 @@ fun AppNavHost(
                 ReminderScreen(appState = appState)
             }
 
-            composable(Destination.Profile.route) {
-                ContentArea(
-                    modifier = Modifier.fillMaxSize(),
-                    destination = Destination.Profile
-                )
+            navigation(
+                route = Destination.Profile.route,
+                startDestination = Destination.HomeProfile.route
+            ) {
+                addProfileGraph(appState = appState)
             }
         }
 

@@ -1,4 +1,4 @@
-package com.pregnancy.domain.usecase
+package com.pregnancy.domain.usecase.auth
 
 import com.pregnancy.domain.repository.AuthRepository
 import javax.inject.Inject
