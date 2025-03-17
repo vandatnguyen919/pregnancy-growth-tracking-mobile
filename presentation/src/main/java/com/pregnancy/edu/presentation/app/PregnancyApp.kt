@@ -5,13 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -83,6 +86,19 @@ fun PregnancyApp(
                             onBookmarkClick = { /* Implement bookmark functionality */ }
                         )
                     }
+
+                    currentRoute.startsWith("${Destination.Reminder.route}/") -> {
+                        TopAppBar(
+                            title = { Text(currentDestination.title) },
+                            navigationIcon = {
+                                IconButton(onClick = {
+                                    appState.navController.popBackStack()
+                                }) {
+                                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                                }
+                            }
+                        )
+                    }
                     // Show default top bar only for main bottom nav destinations
                     isShowBottomBar -> {
                         CenterAlignedTopAppBar(
@@ -91,15 +107,12 @@ fun PregnancyApp(
                             }
                         )
                     }
-                    // No top bar for other screens
-                    else -> { /* No top bar */
-                    }
                 }
             },
             floatingActionButton = {
                 if (isReminderScreen) {
                     FloatingActionButton(
-                        onClick = { appState.navigate("test")},
+                        onClick = { appState.navigate(Destination.AddReminder.route) },
                         containerColor = Color(0xFFFAACAA),
                         contentColor = Color.White
                     ) {

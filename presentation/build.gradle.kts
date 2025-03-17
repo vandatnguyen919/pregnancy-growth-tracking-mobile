@@ -49,6 +49,7 @@ dependencies {
 
     // Hilt for Dependency Injection
     implementation("com.google.dagger:hilt-android:2.55")
+    implementation(libs.androidx.work.runtime.ktx)
     kapt("com.google.dagger:hilt-compiler:2.55")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 

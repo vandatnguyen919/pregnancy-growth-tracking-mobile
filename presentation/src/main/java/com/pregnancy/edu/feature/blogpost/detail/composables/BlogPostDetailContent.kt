@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -53,7 +55,7 @@ fun BlogPostDetailContent(
         )
 
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(12.dp)
         ) {
             // Article Metadata
             Row(
@@ -61,11 +63,13 @@ fun BlogPostDetailContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AsyncImage(
-                    model = "https://placeholder.com/40x40",
+                    model = blogPost.user?.avatarUrl,
                     contentDescription = "Author avatar",
                     modifier = Modifier
-                        .size(40.dp)
                         .padding(end = 8.dp)
+                        .clip(CircleShape)
+                        .size(40.dp),
+                    contentScale = ContentScale.Crop
                 )
                 Column {
                     Text(
@@ -101,7 +105,7 @@ fun BlogPostDetailContent(
 
             // Article Content
             Text(
-                text = blogPost.content ?: "",
+                text = blogPost.content,
                 style = MaterialTheme.typography.bodyLarge
             )
         }

@@ -26,7 +26,7 @@ fun BlogPostContent(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         // Featured article
@@ -139,6 +139,9 @@ fun BlogPostContent(
                     )
                 }
             }
+        }
+        item {
+            Spacer(modifier = Modifier.height(12.dp))
         }
     }
 }

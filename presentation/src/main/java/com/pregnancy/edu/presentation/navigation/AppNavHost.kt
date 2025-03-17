@@ -1,6 +1,6 @@
 package com.pregnancy.edu.presentation.navigation
 
-import ReminderScreen
+import com.pregnancy.edu.feature.reminder.home.ReminderScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -95,7 +95,7 @@ fun AppNavHost(
         }
 
         composable(
-            route = "test"
+            route = Destination.AddReminder.route
         ) {
             AddReminderScreen()
         }

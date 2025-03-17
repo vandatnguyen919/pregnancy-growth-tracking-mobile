@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,8 +26,7 @@ class BlogPostViewModel @Inject constructor(
 ) : BaseViewModel<BlogPostEvent, BlogPostState, BlogPostViewModelState>(
     initState = BlogPostViewModelState()
 ) {
-    private var _pagingDataFlow = MutableStateFlow<PagingData<BlogPost>>(PagingData.empty())
-    val pagingDataFlow = _pagingDataFlow.asStateFlow()
+    val pagingDataFlow = viewModelState.map { it.pagingData }.distinctUntilChanged()
 
     init {
         loadBlogPosts()
@@ -36,14 +37,13 @@ class BlogPostViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val blogPostsFlow: Flow<PagingData<BlogPost>> = getBlogPostsUseCase(
-//                    tag = viewModelState.value.selectedTag
-                ).cachedIn(viewModelScope)
+                val blogPostsFlow: Flow<PagingData<BlogPost>> =
+                    getBlogPostsUseCase().cachedIn(viewModelScope)
 
                 blogPostsFlow.collectLatest { pagingData ->
-                    _pagingDataFlow.value = pagingData
                     viewModelState.update {
                         it.copy(
+                            pagingData = pagingData,
                             isLoading = false,
                             error = null
                         )
@@ -58,20 +58,6 @@ class BlogPostViewModel @Inject constructor(
                 }
             }
         }
-
-//        val featuredBlogPosts = blogPosts.take(1)
-//        val mediumBlogPosts = blogPosts.filter { !featuredBlogPosts.contains(it) }.take(4)
-//        val compactBlogPosts = blogPosts.filter { !featuredBlogPosts.contains(it) && !mediumBlogPosts.contains(it) }
-//
-//        viewModelState.update {
-//            it.copy(
-//                isLoading = false,
-//                featuredBlogPosts = featuredBlogPosts,
-//                mediumBlogPosts = mediumBlogPosts,
-//                compactBlogPosts = compactBlogPosts,
-//                error = null
-//            )
-//        }
     }
 
     override fun onTriggerEvent(event: BlogPostEvent) {

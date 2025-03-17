@@ -16,20 +16,4 @@ data class BlogPostDto(
     val likeQuantity: Int,
     val nameTags: List<String>,
     val userDto: UserDto?
-) {
-    fun toDomain(): BlogPost {
-        return BlogPost(
-            id = id,
-            heading = heading,
-            content = content,
-            pageTitle = pageTitle,
-            shortDescription = shortDescription,
-            featuredImageUrl = featuredImageUrl,
-            isVisible = isVisible,
-            commentQuantity = commentQuantity,
-            likeQuantity = likeQuantity,
-            nameTags = nameTags,
-            user = userDto?.toDomain()
-        )
-    }
-}
+)

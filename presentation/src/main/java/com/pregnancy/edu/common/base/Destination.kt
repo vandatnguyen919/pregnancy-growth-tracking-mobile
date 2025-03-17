@@ -24,7 +24,7 @@ sealed class Destination(
                 route.startsWith(Otp.route) -> Otp
                 route == Home.route -> Home
                 route.startsWith(Blogs.route) -> Blogs
-                route == Reminder.route -> Reminder
+                route.startsWith(Reminder.route) -> Reminder
                 route.startsWith(Profile.route) -> Profile
                 else -> Home
             }
@@ -37,6 +37,8 @@ sealed class Destination(
         private const val ROOT_HOME = "root_home";
 
         private const val ROOT_PROFILE = "root_profile"
+
+        private const val ROOT_REMINDER = "root_reminder"
     }
 
     data object Splash: Destination("splash", "Splash")
@@ -59,7 +61,9 @@ sealed class Destination(
 
     data object Blogs: Destination("${ROOT_HOME}/blogs", "Blogs", Icons.AutoMirrored.Filled.List)
 
-    data object Reminder: Destination("${ROOT_HOME}/reminder", "Reminder", Icons.Default.Notifications)
+    data object Reminder: Destination(ROOT_REMINDER, "Reminder", Icons.Default.Notifications)
+
+    data object AddReminder: Destination("${ROOT_REMINDER}/add", "Add Reminder", isRootDestination = false)
 
     data object Profile: Destination(ROOT_PROFILE, "Profile", Icons.Default.Person)
 

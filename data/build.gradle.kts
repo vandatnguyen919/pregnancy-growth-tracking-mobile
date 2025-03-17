@@ -52,6 +52,9 @@ dependencies {
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:3.3.6")
 
+    // WorkerManger
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

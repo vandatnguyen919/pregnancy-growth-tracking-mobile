@@ -1,6 +1,6 @@
 package com.pregnancy.data.source.remote.api
 
-import com.pregnancy.data.ApiConstants
+import com.pregnancy.data.source.remote.ApiConstants
 import com.pregnancy.data.source.remote.model.ApiResponse
 import com.pregnancy.data.source.remote.model.authentication.LoginResponse
 import com.pregnancy.data.source.remote.model.authentication.RegisterRequest

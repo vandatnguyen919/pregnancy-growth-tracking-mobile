@@ -29,16 +29,6 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.pregnancy.domain.model.blogpost.BlogPost
 import com.pregnancy.edu.R
-import com.pregnancy.edu.feature.blogpost.home.BlogPostFactory
-
-@Preview
-@Composable
-fun CompactArticleCardPreview() {
-    CompactArticleCard(
-        blogPost = BlogPostFactory.createBlogPosts().first(),
-        onBlogPostClick = { }
-    )
-}
 
 @Composable
 fun CompactArticleCard(

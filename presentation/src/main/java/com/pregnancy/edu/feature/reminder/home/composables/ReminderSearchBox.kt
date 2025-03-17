@@ -1,4 +1,4 @@
-package com.pregnancy.edu.feature.reminder.composables
+package com.pregnancy.edu.feature.reminder.home.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth

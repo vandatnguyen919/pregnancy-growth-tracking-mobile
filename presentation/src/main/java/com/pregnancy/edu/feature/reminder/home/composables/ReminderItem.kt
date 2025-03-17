@@ -1,9 +1,8 @@
-package com.pregnancy.edu.feature.reminder.composables
+package com.pregnancy.edu.feature.reminder.home.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.pregnancy.domain.model.reminder.Reminder
 import com.pregnancy.edu.feature.blogpost.home.composables.TagChip
+import java.time.LocalDateTime
 
 @Preview
 @Composable
@@ -28,7 +28,7 @@ fun ReminderItemPreview() {
         reminder = Reminder(
             id = 1,
             description = "Meeting with Dr. Smith",
-            reminderDate = "2025-02-23",
+            reminderDate = LocalDateTime.now(),
             reminderType = "Appointment",
         )
     ) { }
@@ -46,7 +46,7 @@ fun ReminderItem(
             .clip(RoundedCornerShape(8.dp))
             .fillMaxWidth()
             .background(Color.White)
-            .clickable { onReminderItemClick(reminder.id) }
+            .clickable { reminder.id?.let { onReminderItemClick(it) } }
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         val (circle, text, chip) = createRefs()
