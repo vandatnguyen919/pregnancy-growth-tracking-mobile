@@ -2,13 +2,9 @@ package com.pregnancy.data.source.remote.paging
 
 import android.util.Log
 import androidx.paging.PagingSource
-import androidx.paging.PagingSource.LoadParams
-import androidx.paging.PagingSource.LoadResult
 import androidx.paging.PagingState
 import com.pregnancy.data.source.remote.api.ReminderApiService
-import com.pregnancy.data.source.remote.model.blogpost.BlogPostDto
 import com.pregnancy.data.source.remote.model.reminder.ReminderDto
-import com.pregnancy.domain.model.reminder.Reminder
 import retrofit2.HttpException
 import java.io.IOException
 

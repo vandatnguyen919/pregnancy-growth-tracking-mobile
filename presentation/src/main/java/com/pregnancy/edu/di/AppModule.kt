@@ -13,12 +13,13 @@ import com.pregnancy.domain.repository.AuthRepository
 import com.pregnancy.domain.repository.BlogRepository
 import com.pregnancy.domain.repository.ReminderRepository
 import com.pregnancy.domain.usecase.auth.GetMyProfileUseCase
-import com.pregnancy.domain.usecase.blogpost.GetBlogPostUseCase
-import com.pregnancy.domain.usecase.blogpost.GetBlogPostsUseCase
 import com.pregnancy.domain.usecase.auth.LoginUseCase
 import com.pregnancy.domain.usecase.auth.RegisterUseCase
 import com.pregnancy.domain.usecase.auth.SendOtpUseCase
 import com.pregnancy.domain.usecase.auth.ValidateEmailUseCase
+import com.pregnancy.domain.usecase.blogpost.GetBlogPostUseCase
+import com.pregnancy.domain.usecase.blogpost.GetBlogPostsUseCase
+import com.pregnancy.domain.usecase.reminder.CancelReminderUseCase
 import com.pregnancy.domain.usecase.reminder.GetRemindersUseCase
 import dagger.Module
 import dagger.Provides
@@ -92,9 +93,16 @@ class AppModule {
         return ReminderRepositoryImpl(apiService, workManager)
     }
 
+    @Provides
     @Singleton
     fun provideGetRemindersUseCase(repository: ReminderRepository): GetRemindersUseCase {
         return GetRemindersUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCancelReminderUseCase(repository: ReminderRepository): CancelReminderUseCase {
+        return CancelReminderUseCase(repository)
     }
 
     @Provides

@@ -1,4 +1,7 @@
-// data/src/main/java/com/pregnancy/data/worker/ReminderWorker.kt
+// Step 1: Add the Hilt Work dependency in your build.gradle
+// implementation "androidx.hilt:hilt-work:1.0.0"
+
+// Step 2: Update your ReminderWorker
 package com.pregnancy.data.worker
 
 import android.app.NotificationChannel
@@ -6,13 +9,19 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.pregnancy.data.R
+import com.pregnancy.domain.repository.ReminderRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 
-class ReminderWorker(
-    private val context: Context,
-    params: WorkerParameters
+@HiltWorker
+class ReminderWorker @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @Assisted params: WorkerParameters,
+    private val reminderRepository: ReminderRepository
 ) : CoroutineWorker(context, params) {
 
     companion object {
@@ -25,15 +34,17 @@ class ReminderWorker(
     }
 
     override suspend fun doWork(): Result {
-        val reminderId = inputData.getString(KEY_REMINDER_ID) ?: return Result.failure()
+        val reminderIdStr = inputData.getString(KEY_REMINDER_ID) ?: return Result.failure()
+        val reminderId = reminderIdStr.toLongOrNull() ?: return Result.failure()
         val title = inputData.getString(KEY_REMINDER_TITLE) ?: "Reminder"
         val description = inputData.getString(KEY_REMINDER_DESCRIPTION) ?: ""
 
+        // Display notification
         createNotificationChannel()
-        
+
         val notificationId = reminderId.hashCode()
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notifications) // Add this resource file
+            .setSmallIcon(R.drawable.ic_notifications)
             .setContentTitle(title)
             .setContentText(description)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -41,10 +52,16 @@ class ReminderWorker(
             .build()
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
-            as NotificationManager
+                as NotificationManager
         notificationManager.notify(notificationId, notification)
 
-        return Result.success()
+        // Delete the reminder from API after showing notification
+        val result = reminderRepository.cancelReminder(reminderId)
+        return if (result.isSuccess) {
+            Result.success()
+        } else {
+            Result.failure()
+        }
     }
 
     private fun createNotificationChannel() {
@@ -53,9 +70,9 @@ class ReminderWorker(
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
                 description = "Pregnancy app reminder notifications"
             }
-            
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) 
-                as NotificationManager
+
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
+                    as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }

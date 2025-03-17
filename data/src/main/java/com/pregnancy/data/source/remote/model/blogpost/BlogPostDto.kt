@@ -1,7 +1,6 @@
 package com.pregnancy.data.source.remote.model.blogpost
 
 import com.pregnancy.data.source.remote.model.authentication.UserDto
-import com.pregnancy.domain.model.blogpost.BlogPost
 
 // Models
 data class BlogPostDto(

@@ -9,7 +9,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.pregnancy.edu.common.base.permission.PermissionState
 import com.pregnancy.edu.common.base.permission.PermissionStateHolder
 import com.pregnancy.edu.common.base.permission.Permissions
-import java.util.logging.Logger
 
 
 /**

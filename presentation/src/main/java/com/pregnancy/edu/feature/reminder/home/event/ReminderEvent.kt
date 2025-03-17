@@ -7,4 +7,6 @@ sealed class ReminderEvent : ViewEvent {
     data object LoadReminders : ReminderEvent()
 
     data object ReloadReminders: ReminderEvent()
+
+    data class CancelReminder(val reminderId: Long) : ReminderEvent()
 }

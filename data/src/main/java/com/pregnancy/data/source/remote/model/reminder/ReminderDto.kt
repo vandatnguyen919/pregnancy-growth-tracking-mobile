@@ -1,7 +1,6 @@
 package com.pregnancy.data.source.remote.model.reminder
 
 import com.pregnancy.domain.model.ReminderStatus
-import com.pregnancy.domain.model.reminder.Reminder
 import java.time.LocalDateTime
 
 data class ReminderDto(

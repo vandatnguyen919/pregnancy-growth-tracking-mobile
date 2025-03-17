@@ -31,12 +31,7 @@ fun OnboardingScreen(
     onboardingViewModel: OnboardingViewModel = viewModel()
 ) {
     val notificationPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        rememberPermissionState(
-            permission = Permissions.POST_NOTIFICATIONS,
-            onPermissionResult = {
-                appState.clearAndNavigate(Destination.Login.route)
-            }
-        )
+        rememberPermissionState(permission = Permissions.POST_NOTIFICATIONS)
     } else null
 
     Box(
@@ -55,6 +50,7 @@ fun OnboardingScreen(
         OnboardingContent(
             onFinishOnboarding = {
                 notificationPermission?.requestPermission()
+                appState.clearAndNavigate(Destination.Login.route)
             },
             pages = onboardingViewModel.uiState.collectAsStateWithLifecycle().value
         )

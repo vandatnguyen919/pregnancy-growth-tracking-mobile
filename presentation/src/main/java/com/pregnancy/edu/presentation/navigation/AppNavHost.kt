@@ -1,6 +1,5 @@
 package com.pregnancy.edu.presentation.navigation
 
-import com.pregnancy.edu.feature.reminder.home.ReminderScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,6 +16,7 @@ import com.pregnancy.edu.feature.blogpost.home.BlogPostScreen
 import com.pregnancy.edu.feature.onboarding.OnboardingScreen
 import com.pregnancy.edu.feature.profile.addProfileGraph
 import com.pregnancy.edu.feature.reminder.add.AddReminderScreen
+import com.pregnancy.edu.feature.reminder.home.ReminderScreen
 import com.pregnancy.edu.feature.splashscreen.SplashScreen
 
 @Composable
@@ -97,7 +97,7 @@ fun AppNavHost(
         composable(
             route = Destination.AddReminder.route
         ) {
-            AddReminderScreen()
+            AddReminderScreen(appState = appState)
         }
     }
 }

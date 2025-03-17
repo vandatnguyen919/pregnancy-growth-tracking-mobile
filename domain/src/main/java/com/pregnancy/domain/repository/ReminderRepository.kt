@@ -12,7 +12,7 @@ interface ReminderRepository {
 
     suspend fun scheduleReminder(reminder: Reminder): Result<Reminder>
 
-    suspend fun cancelReminder(reminderId: String): Result<Unit>
+    suspend fun cancelReminder(reminderId: Long): Result<Unit>
 
 //    suspend fun updateReminder(reminder: Reminder): Boolean
 //

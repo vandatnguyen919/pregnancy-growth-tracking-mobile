@@ -4,7 +4,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import androidx.navigation.navigation
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.feature.authentication.login.LoginScreen
 import com.pregnancy.edu.feature.authentication.otp.OtpVerificationScreen

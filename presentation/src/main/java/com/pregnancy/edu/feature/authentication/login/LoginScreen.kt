@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pregnancy.edu.R
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.feature.authentication.login.composable.AuthenticationErrorDialog

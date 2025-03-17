@@ -6,8 +6,10 @@ import com.pregnancy.data.source.remote.model.PagedResponse
 import com.pregnancy.data.source.remote.model.reminder.ReminderDto
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ReminderApiService {
@@ -22,4 +24,9 @@ interface ReminderApiService {
     suspend fun addReminder(
         @Body reminder: ReminderDto
     ): Response<ApiResponse<ReminderDto>>
+
+    @DELETE("${ApiConstants.REMINDER_PATH}/{id}")
+    suspend fun deleteReminder(
+        @Path("id") id: Long
+    ): Response<ApiResponse<Any>>
 }

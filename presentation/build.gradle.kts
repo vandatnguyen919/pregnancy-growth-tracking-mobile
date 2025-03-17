@@ -49,7 +49,6 @@ dependencies {
 
     // Hilt for Dependency Injection
     implementation("com.google.dagger:hilt-android:2.55")
-    implementation(libs.androidx.work.runtime.ktx)
     kapt("com.google.dagger:hilt-compiler:2.55")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
@@ -68,6 +67,10 @@ dependencies {
     // Paging 3
     implementation("androidx.paging:paging-runtime:3.3.6") // Paging for ViewModel
     implementation("androidx.paging:paging-compose:3.2.1") // Paging for Jetpack Compose
+
+    // WorkerManger
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

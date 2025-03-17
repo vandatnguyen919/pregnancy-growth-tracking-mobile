@@ -33,6 +33,9 @@ class ReminderRepositoryImpl @Inject constructor(
     private val workManager: WorkManager,
 ) : ReminderRepository {
 
+    // Keep a reference to the latest paging source
+    private var currentPagingSource: ReminderPagingSource? = null
+
     override fun getReminders(): Flow<PagingData<Reminder>> {
         return Pager(
             config = PagingConfig(
@@ -43,7 +46,7 @@ class ReminderRepositoryImpl @Inject constructor(
                 maxSize = MAX_SIZE
             ),
             pagingSourceFactory = {
-                ReminderPagingSource(apiService)
+                ReminderPagingSource(apiService).also { currentPagingSource = it }
             }
         ).flow.map { pagingData ->
             pagingData.map { reminderDto ->
@@ -60,6 +63,8 @@ class ReminderRepositoryImpl @Inject constructor(
                 response.body()?.let { res ->
                     val savedReminder = res.data.toDomain()
                     scheduleReminderNotification(savedReminder)
+                    // Invalidate the paging source to trigger a refresh
+                    currentPagingSource?.invalidate()
                     Result.success(savedReminder)
                 } ?: Result.failure(Exception("Empty response body"))
             } else {
@@ -105,10 +110,20 @@ class ReminderRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun cancelReminder(reminderId: String): Result<Unit> {
+    override suspend fun cancelReminder(reminderId: Long): Result<Unit> {
         return try {
-            workManager.cancelUniqueWork(reminderId)
-            Result.success(Unit)
+            val response = apiService.deleteReminder(reminderId)
+
+            if (response.isSuccessful) {
+                workManager.cancelUniqueWork(reminderId.toString())
+                // Invalidate the paging source to trigger a refresh
+                currentPagingSource?.invalidate()
+                Result.success(Unit)
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMessage = parseErrorResponse(errorBody)
+                Result.failure(Exception(errorMessage))
+            }
         } catch (e: Exception) {
             Result.failure(e)
         }

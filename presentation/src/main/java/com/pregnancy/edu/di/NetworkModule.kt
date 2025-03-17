@@ -8,7 +8,6 @@ import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
 import com.pregnancy.data.source.local.TokenManager
 import com.pregnancy.data.source.remote.interceptor.AuthInterceptor
-import com.pregnancy.edu.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,7 +51,7 @@ object NetworkModule {
 
         return Retrofit.Builder()
 //            .baseUrl(BuildConfig.BASE_URL)
-            .baseUrl("http://192.168.100.59:8080")
+            .baseUrl("http://21.64.2.246:8080")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
