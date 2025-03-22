@@ -10,6 +10,7 @@ data class AddReminderState(
     val selectedReminderType: String? = null,
     val selectedDate: Calendar = Calendar.getInstance(),
     val selectedTime: Calendar = Calendar.getInstance(),
+    val addSuccess: Boolean = false,
     val isLoading: Boolean = false,
     val error: String? = null
 ) : ViewState() {

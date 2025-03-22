@@ -82,7 +82,7 @@ class AddReminderViewModel @Inject constructor(
             scheduleReminderUseCase(
                 reminder = reminder
             ).onSuccess {
-                viewModelState.update { it.copy(isLoading = true) }
+                viewModelState.update { it.copy(isLoading = true, addSuccess = true) }
             }.onFailure {
                 viewModelState.update { it.copy(isLoading = false, error = it.error) }
             }

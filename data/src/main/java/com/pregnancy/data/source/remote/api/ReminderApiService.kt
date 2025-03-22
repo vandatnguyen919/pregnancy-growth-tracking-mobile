@@ -11,13 +11,15 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.time.LocalDateTime
 
 interface ReminderApiService {
 
-    @GET(ApiConstants.REMINDER_PATH)
+    @GET("${ApiConstants.REMINDER_PATH}/me")
     suspend fun getReminders(
         @Query("page") page: Int,
-        @Query("size") size: Int
+        @Query("size") size: Int,
+        @Query("reminderDate") reminderDate: LocalDateTime? = null,
     ): Response<ApiResponse<PagedResponse<ReminderDto>>>
 
     @POST(ApiConstants.REMINDER_PATH)

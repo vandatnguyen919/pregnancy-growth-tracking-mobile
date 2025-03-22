@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -28,11 +29,13 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +48,18 @@ import com.pregnancy.domain.model.authentication.User
 import com.pregnancy.edu.R
 import java.time.format.DateTimeFormatter
 
+// Define pink palette colors
+private val LightestPink = Color(0xFFFFF0F3)
+private val LightPink = Color(0xFFFFCCD5)
+private val MediumLightPink = Color(0xFFFFB3C1)
+private val MediumPink = Color(0xFFFF8FA3)
+private val MediumDarkPink = Color(0xFFFF758F)
+private val DarkPink = Color(0xFFFF4D6D)
+private val DarkerPink = Color(0xFFC9184A)
+private val DarkestPink = Color(0xFFA4133C)
+private val DeepPink = Color(0xFF800F2F)
+private val BlackPink = Color(0xFF590D22)
+
 @Composable
 fun HomeProfileContent(
     user: User,
@@ -53,15 +68,17 @@ fun HomeProfileContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .background(LightestPink)
+            .padding(horizontal = 12.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Avatar and Name
         Box(
             modifier = Modifier
+                .padding(top = 24.dp, bottom = 8.dp)
                 .size(100.dp)
-                .padding(4.dp)
+                .background(MediumLightPink, CircleShape)
         ) {
             Image(
                 painter = rememberAsyncImagePainter(
@@ -77,16 +94,16 @@ fun HomeProfileContent(
                 contentScale = ContentScale.Crop
             )
 
-            if (user.verified == true) {
+            if (user.verified) {
                 Icon(
                     imageVector = Icons.Default.Favorite,
                     contentDescription = "Verified",
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .size(24.dp)
-                        .background(MaterialTheme.colorScheme.background, CircleShape)
+                        .background(Color.White, CircleShape)
                         .padding(2.dp),
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = DarkPink
                 )
             }
         }
@@ -97,21 +114,22 @@ fun HomeProfileContent(
             Text(
                 text = it,
                 style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = BlackPink
             )
         }
 
         Text(
             text = "@${user.username}",
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.primary
+            color = DarkPink
         )
 
         Row(
             modifier = Modifier.padding(vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val statusColor = if (user.enabled == true) Color.Green else Color.Red
+            val statusColor = if (user.enabled) Color(0xFF27AE60) else Color(0xFFEB5757)
             Box(
                 modifier = Modifier
                     .size(8.dp)
@@ -119,123 +137,177 @@ fun HomeProfileContent(
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text = if (user.enabled == true) "Active" else "Inactive",
+                text = if (user.enabled) "Active" else "Inactive",
                 style = MaterialTheme.typography.bodySmall,
                 color = statusColor
             )
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            if (user.verified == true) {
+            if (user.verified) {
                 Text(
                     text = "• Verified",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary
+                    color = DarkPink
                 )
             }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Detailed Information Section
-        Text(
-            text = "Personal Information",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
+        // Section container style
+        val sectionStyle = Modifier
+            .fillMaxWidth()
+            .shadow(1.dp, RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(12.dp))
 
-        // Personal details with icons
-        ProfileInfoItem(
-            icon = Icons.Default.Email,
-            label = "Email",
-            value = user.email
-        )
+        // Personal Information Section
+        Surface(
+            modifier = sectionStyle,
+            color = Color.White,
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Personal Information",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = DarkerPink,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
 
-        ProfileInfoItem(
-            icon = Icons.Default.Phone,
-            label = "Phone",
-            value = user.phoneNumber ?: "Not provided"
-        )
+                // Personal details with icons
+                ProfileInfoItem(
+                    icon = Icons.Default.Email,
+                    label = "Email",
+                    value = user.email,
+                    iconTint = DarkPink,
+                    labelColor = DeepPink,
+                    valueColor = BlackPink
+                )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ProfileInfoItem(
-                icon = Icons.Default.DateRange,
-                label = "Date of Birth",
-                value = user.dateOfBirth?.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-                    ?: "Not provided"
-            )
-        }
+                ProfileInfoItem(
+                    icon = Icons.Default.Phone,
+                    label = "Phone",
+                    value = user.phoneNumber ?: "Not provided",
+                    iconTint = DarkPink,
+                    labelColor = DeepPink,
+                    valueColor = BlackPink
+                )
 
-        ProfileInfoItem(
-            icon = Icons.Default.Person,
-            label = "Gender",
-            value = when (user.gender) {
-                true -> "Male"
-                false -> "Female"
-                else -> "Not specified"
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ProfileInfoItem(
+                        icon = Icons.Default.DateRange,
+                        label = "Date of Birth",
+                        value = user.dateOfBirth?.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+                            ?: "Not provided",
+                        iconTint = DarkPink,
+                        labelColor = DeepPink,
+                        valueColor = BlackPink
+                    )
+                }
+
+                ProfileInfoItem(
+                    icon = Icons.Default.Person,
+                    label = "Gender",
+                    value = when (user.gender) {
+                        true -> "Male"
+                        false -> "Female"
+                        else -> "Not specified"
+                    },
+                    iconTint = DarkPink,
+                    labelColor = DeepPink,
+                    valueColor = BlackPink
+                )
+
+                ProfileInfoItem(
+                    icon = Icons.Default.LocationOn,
+                    label = "Nationality",
+                    value = user.nationality ?: "Not provided",
+                    iconTint = DarkPink,
+                    labelColor = DeepPink,
+                    valueColor = BlackPink
+                )
             }
-        )
-
-        ProfileInfoItem(
-            icon = Icons.Default.LocationOn,
-            label = "Nationality",
-            value = user.nationality ?: "Not provided"
-        )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Medical Information Section
-        Text(
-            text = "Medical Information",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp, top = 8.dp)
-        )
+        Surface(
+            modifier = sectionStyle,
+            color = Color.White,
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Medical Information",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = DarkerPink,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
 
-        ProfileInfoItem(
-            icon = Icons.Default.Favorite,
-            label = "Blood Type",
-            value = user.bloodType?.displayName ?: "Not provided"
-        )
+                ProfileInfoItem(
+                    icon = Icons.Default.Favorite,
+                    label = "Blood Type",
+                    value = user.bloodType?.displayName ?: "Not provided",
+                    iconTint = DarkPink,
+                    labelColor = DeepPink,
+                    valueColor = BlackPink
+                )
 
-        ProfileInfoItem(
-            icon = Icons.Default.Menu,
-            label = "Symptoms",
-            value = user.symptoms ?: "None"
-        )
+                ProfileInfoItem(
+                    icon = Icons.Default.Menu,
+                    label = "Symptoms",
+                    value = user.symptoms ?: "None",
+                    iconTint = DarkPink,
+                    labelColor = DeepPink,
+                    valueColor = BlackPink
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Account Information Section
-        Text(
-            text = "Account Information",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp, top = 8.dp)
-        )
+        Surface(
+            modifier = sectionStyle,
+            color = Color.White,
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Account Information",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = DarkerPink,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
 
-        ProfileInfoItem(
-            icon = Icons.Default.AccountCircle,
-            label = "Role",
-            value = user.role
-        )
+                ProfileInfoItem(
+                    icon = Icons.Default.AccountCircle,
+                    label = "Role",
+                    value = user.role,
+                    iconTint = DarkPink,
+                    labelColor = DeepPink,
+                    valueColor = BlackPink
+                )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ProfileInfoItem(
-                icon = Icons.Default.DateRange,
-                label = "Member Since",
-                value = user.createdAt?.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-                    ?: "Unknown"
-            )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ProfileInfoItem(
+                        icon = Icons.Default.DateRange,
+                        label = "Member Since",
+                        value = user.createdAt?.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+                            ?: "Unknown",
+                        iconTint = DarkPink,
+                        labelColor = DeepPink,
+                        valueColor = BlackPink
+                    )
+                }
+            }
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }

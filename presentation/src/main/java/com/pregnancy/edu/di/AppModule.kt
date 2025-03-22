@@ -4,13 +4,16 @@ import android.content.Context
 import androidx.work.WorkManager
 import com.pregnancy.data.repository.AuthRepositoryImpl
 import com.pregnancy.data.repository.BlogRepositoryImpl
+import com.pregnancy.data.repository.PregnancyRepositoryImpl
 import com.pregnancy.data.repository.ReminderRepositoryImpl
 import com.pregnancy.data.source.local.TokenManager
 import com.pregnancy.data.source.remote.api.AuthApiService
 import com.pregnancy.data.source.remote.api.BlogApiService
+import com.pregnancy.data.source.remote.api.PregnancyApiService
 import com.pregnancy.data.source.remote.api.ReminderApiService
 import com.pregnancy.domain.repository.AuthRepository
 import com.pregnancy.domain.repository.BlogRepository
+import com.pregnancy.domain.repository.PregnancyRepository
 import com.pregnancy.domain.repository.ReminderRepository
 import com.pregnancy.domain.usecase.auth.GetMyProfileUseCase
 import com.pregnancy.domain.usecase.auth.LoginUseCase
@@ -19,6 +22,7 @@ import com.pregnancy.domain.usecase.auth.SendOtpUseCase
 import com.pregnancy.domain.usecase.auth.ValidateEmailUseCase
 import com.pregnancy.domain.usecase.blogpost.GetBlogPostUseCase
 import com.pregnancy.domain.usecase.blogpost.GetBlogPostsUseCase
+import com.pregnancy.domain.usecase.pregnancy.GetGestationalWeekInsightUseCase
 import com.pregnancy.domain.usecase.reminder.CancelReminderUseCase
 import com.pregnancy.domain.usecase.reminder.GetRemindersUseCase
 import dagger.Module
@@ -73,6 +77,24 @@ class AppModule {
     @Singleton
     fun provideAuthRepository(authApiService: AuthApiService, tokenManager: TokenManager): AuthRepository {
         return AuthRepositoryImpl(authApiService, tokenManager)
+    }
+
+    @Provides
+    @Singleton
+    fun providePregnancyRepository(pregnancyApiService: PregnancyApiService): PregnancyRepository {
+        return PregnancyRepositoryImpl(pregnancyApiService)
+    }
+
+    @Provides
+    @Singleton
+    fun providePregnancyApiService(retrofit: Retrofit): PregnancyApiService {
+        return retrofit.create(PregnancyApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGestationalWeekInsightUseCase(pregnancyRepository: PregnancyRepository): GetGestationalWeekInsightUseCase {
+        return GetGestationalWeekInsightUseCase(pregnancyRepository)
     }
 
     @Provides

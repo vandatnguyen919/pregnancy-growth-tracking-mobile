@@ -13,11 +13,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ProfileInfoItem(icon: ImageVector, label: String, value: String) {
+fun ProfileInfoItem(
+    icon: ImageVector,
+    label: String,
+    value: String,
+    iconTint: Color = MaterialTheme.colorScheme.primary,
+    labelColor: Color = MaterialTheme.colorScheme.outline,
+    valueColor: Color = Color.Unspecified
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,7 +36,7 @@ fun ProfileInfoItem(icon: ImageVector, label: String, value: String) {
             imageVector = icon,
             contentDescription = label,
             modifier = Modifier.size(24.dp),
-            tint = MaterialTheme.colorScheme.primary
+            tint = iconTint
         )
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -37,11 +45,12 @@ fun ProfileInfoItem(icon: ImageVector, label: String, value: String) {
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline
+                color = labelColor
             )
             Text(
                 text = value,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
+                color = valueColor
             )
         }
     }

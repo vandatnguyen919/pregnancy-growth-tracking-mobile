@@ -24,4 +24,8 @@
     <string name="cd_search">Search</string>
     <string name="cd_today">Today</string>
     <string name="cd_tomorrow">Tomorrow</string>
+    <string name="text_title">Title</string>
+    <string name="text_description">Description</string>
+    <string name="text_reminder_type">Reminder Type</string>
+    <string name="text_save">Save</string>
 </resources>

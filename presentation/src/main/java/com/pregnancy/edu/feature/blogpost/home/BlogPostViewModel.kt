@@ -10,6 +10,8 @@ import com.pregnancy.edu.feature.blogpost.home.event.BlogPostEvent
 import com.pregnancy.edu.feature.blogpost.home.state.BlogPostState
 import com.pregnancy.edu.feature.blogpost.home.state.BlogPostViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -33,7 +35,7 @@ class BlogPostViewModel @Inject constructor(
     private fun loadBlogPosts() {
         viewModelState.update { it.copy(isLoading = true) }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO){
             try {
                 val blogPostsFlow: Flow<PagingData<BlogPost>> =
                     getBlogPostsUseCase().cachedIn(viewModelScope)

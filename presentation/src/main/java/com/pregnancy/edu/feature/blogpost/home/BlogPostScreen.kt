@@ -12,6 +12,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.pregnancy.domain.model.blogpost.BlogPost
 import com.pregnancy.edu.feature.blogpost.home.composables.BlogPostContent
+import com.pregnancy.edu.feature.blogpost.home.composables.BlogPostSkeleton
+import com.pregnancy.edu.feature.blogpost.home.composables.BlogPostSkeletonScreen
 import com.pregnancy.edu.presentation.navigation.PregnancyAppState
 
 //@Preview
@@ -29,9 +31,13 @@ fun BlogPostScreen(
             .fillMaxSize()
             .background(Color(0xFFFFF5F5))
     ) {
-        BlogPostContent(
-            appState = appState,
-            pagingItems = pagingItems
-        )
+        if (uiState.value.isLoading) {
+            BlogPostSkeleton()
+        } else {
+            BlogPostContent(
+                appState = appState,
+                pagingItems = pagingItems
+            )
+        }
     }
 }

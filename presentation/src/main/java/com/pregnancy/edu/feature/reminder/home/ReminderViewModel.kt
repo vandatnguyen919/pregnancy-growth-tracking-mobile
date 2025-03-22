@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,18 +31,11 @@ class ReminderViewModel @Inject constructor(
 
     val pagingDataFlow = viewModelState.map { it.pagingData }.distinctUntilChanged()
 
-    init {
-        loadReminders()
-    }
-
     @SuppressLint("NewApi")
     override fun onTriggerEvent(event: ReminderEvent) {
         when (event) {
             is ReminderEvent.LoadReminders -> {
-                loadReminders()
-            }
-            ReminderEvent.ReloadReminders -> {
-                loadReminders()
+                loadReminders(event.reminderDate)
             }
             is ReminderEvent.CancelReminder -> {
                 cancelReminder(event.reminderId)
@@ -63,13 +57,13 @@ class ReminderViewModel @Inject constructor(
         }
     }
 
-    private fun loadReminders() {
+    private fun loadReminders(localDateTime: LocalDateTime? = null) {
         viewModelState.update { it.copy(isLoading = true) }
 
         viewModelScope.launch {
             try {
                 val remindersFlow: Flow<PagingData<Reminder>> =
-                    getRemindersUseCase().cachedIn(viewModelScope)
+                    getRemindersUseCase(localDateTime).cachedIn(viewModelScope)
 
                 remindersFlow.collectLatest { pagingData ->
                     viewModelState.update {

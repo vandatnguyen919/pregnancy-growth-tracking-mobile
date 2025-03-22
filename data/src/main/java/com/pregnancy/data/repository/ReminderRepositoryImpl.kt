@@ -24,6 +24,7 @@ import com.pregnancy.domain.model.reminder.Reminder
 import com.pregnancy.domain.repository.ReminderRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -36,7 +37,7 @@ class ReminderRepositoryImpl @Inject constructor(
     // Keep a reference to the latest paging source
     private var currentPagingSource: ReminderPagingSource? = null
 
-    override fun getReminders(): Flow<PagingData<Reminder>> {
+    override fun getReminders(reminderDate: LocalDateTime?): Flow<PagingData<Reminder>> {
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
@@ -46,7 +47,10 @@ class ReminderRepositoryImpl @Inject constructor(
                 maxSize = MAX_SIZE
             ),
             pagingSourceFactory = {
-                ReminderPagingSource(apiService).also { currentPagingSource = it }
+                ReminderPagingSource(
+                    reminderDate = reminderDate,
+                    apiService = apiService
+                ).also { currentPagingSource = it }
             }
         ).flow.map { pagingData ->
             pagingData.map { reminderDto ->

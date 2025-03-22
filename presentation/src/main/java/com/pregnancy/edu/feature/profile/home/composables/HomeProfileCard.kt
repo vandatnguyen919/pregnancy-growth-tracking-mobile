@@ -38,6 +38,10 @@ import coil3.request.placeholder
 import com.pregnancy.domain.model.BloodType
 import com.pregnancy.domain.model.authentication.User
 import com.pregnancy.edu.R
+import com.pregnancy.edu.common.theme.Pink100
+import com.pregnancy.edu.common.theme.Pink50
+import com.pregnancy.edu.common.theme.Pink600
+import com.pregnancy.edu.common.theme.Pink800
 import java.time.LocalDateTime
 
 @Composable
@@ -52,7 +56,10 @@ fun HomeProfileCard(
             .background(Color.White, RoundedCornerShape(12.dp))
             .clickable(onClick = onCardClick)
             .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White,
+        )
     ) {
         Column(
             modifier = Modifier
@@ -64,7 +71,7 @@ fun HomeProfileCard(
                 modifier = Modifier
                     .size(120.dp)
                     .padding(8.dp)
-                    .background(MaterialTheme.colorScheme.surfaceDim, CircleShape)
+                    .background(Pink100, CircleShape)
             ) {
                 // Avatar
                 Image(
@@ -88,9 +95,9 @@ fun HomeProfileCard(
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
                             .size(28.dp)
-                            .background(MaterialTheme.colorScheme.background, CircleShape)
+                            .background(Color.White, CircleShape)
                             .padding(2.dp),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = Pink600
                     )
                 }
             }
@@ -102,7 +109,8 @@ fun HomeProfileCard(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Pink800
                 )
             }
 
@@ -110,7 +118,7 @@ fun HomeProfileCard(
             Text(
                 text = "@${user.username}",
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary
+                color = Pink600
             )
         }
     }

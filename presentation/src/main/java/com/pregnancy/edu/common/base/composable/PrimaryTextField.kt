@@ -36,10 +36,13 @@ fun PrimaryTextField(
     onValueChange: (String) -> Unit,
     label: String,
     isError: Boolean = false,
+    errorText: String? = null,
     enabled: Boolean = true,
     readOnly: Boolean = false,
     singleLine: Boolean = true,
     maxLines: Int = 1,
+    minLines: Int = 1,
+    trailingIcon: @Composable (() -> Unit)? = null,
     textStyle: TextStyle = TextStyle(
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal
@@ -55,6 +58,7 @@ fun PrimaryTextField(
         textStyle = textStyle,
         singleLine = singleLine,
         maxLines = maxLines,
+        minLines = minLines,
         enabled = enabled,
         readOnly = readOnly,
         isError = isError,
@@ -71,6 +75,15 @@ fun PrimaryTextField(
             cursorColor = Color(0xFFFAACAA)
         ),
         shape = RoundedCornerShape(12.dp),
+        trailingIcon = trailingIcon,
+        supportingText = {
+            if (isError) {
+                Text(
+                    text = errorText ?: "Invalid input",
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        },
         keyboardOptions = KeyboardOptions(
             imeAction = when (keyboardAction) {
                 is KeyboardAction.Next -> ImeAction.Next

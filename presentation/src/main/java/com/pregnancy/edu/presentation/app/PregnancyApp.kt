@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -23,11 +23,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.pregnancy.data.source.local.TokenManager
 import com.pregnancy.edu.common.base.Destination
+import com.pregnancy.edu.common.theme.Pink900
 import com.pregnancy.edu.common.theme.PregnancyTheme
 import com.pregnancy.edu.feature.blogpost.detail.composables.BlogPostDetailTopAppBar
 import com.pregnancy.edu.presentation.composable.BottomNavigationBar
@@ -69,7 +71,7 @@ fun PregnancyApp(
         }
 
         val isShowBottomBar = when (currentDestination.route) {
-            Destination.Home.route, Destination.Blogs.route, Destination.Reminder.route, Destination.Profile.route -> true
+            Destination.Home.route, Destination.Blogs.route, Destination.Reminder.route -> true
             else -> false
         }
 
@@ -87,9 +89,15 @@ fun PregnancyApp(
                         )
                     }
 
-                    currentRoute.startsWith("${Destination.Reminder.route}/") -> {
+                    currentRoute.startsWith("${Destination.Reminder.route}/")
+                            || currentRoute.startsWith("${Destination.Profile.route}/") -> {
                         TopAppBar(
-                            title = { Text(currentDestination.title) },
+                            title = {
+                                Text(
+                                    text = currentDestination.title,
+                                    fontWeight = FontWeight.SemiBold,
+                                )
+                            },
                             navigationIcon = {
                                 IconButton(onClick = {
                                     appState.navController.popBackStack()
@@ -101,9 +109,23 @@ fun PregnancyApp(
                     }
                     // Show default top bar only for main bottom nav destinations
                     isShowBottomBar -> {
-                        CenterAlignedTopAppBar(
+                        TopAppBar(
+                            navigationIcon = {
+                                IconButton(onClick = {
+                                    appState.navController.navigate(Destination.Profile.route)
+                                }) {
+                                    Icon(
+                                        Icons.Default.AccountCircle,
+                                        "Profile",
+                                        tint = Pink900
+                                    )
+                                }
+                            },
                             title = {
-                                Text(currentDestination.title)
+                                Text(
+                                    text = currentDestination.title,
+                                    fontWeight = FontWeight.SemiBold,
+                                )
                             }
                         )
                     }

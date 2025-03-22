@@ -3,9 +3,11 @@ package com.pregnancy.edu.presentation.composable
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.pregnancy.edu.common.base.Destination
 import com.pregnancy.edu.presentation.navigation.NavigationBarItem
 
@@ -17,7 +19,8 @@ fun BottomNavigationBar(
 ) {
 
     NavigationBar(
-        modifier = modifier
+        modifier = modifier,
+        containerColor = Color.White,
     ) {
         buildNavigationBarItems(
             currentDestination = currentDestination,
@@ -27,7 +30,10 @@ fun BottomNavigationBar(
                 selected = it.selected,
                 icon = it.icon,
                 onClick = it.onClick,
-                label = it.label
+                label = it.label,
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color(0xFFFFEAEA)
+                )
             )
         }
     }
@@ -42,7 +48,7 @@ fun buildNavigationBarItems(
         Destination.Home,
         Destination.Blogs,
         Destination.Reminder,
-        Destination.Profile
+//        Destination.Profile
     ).map {
         NavigationBarItem(
             selected = currentDestination.route == it.route,

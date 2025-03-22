@@ -1,6 +1,6 @@
 package com.pregnancy.edu.presentation.navigation
 
-import androidx.compose.foundation.layout.fillMaxSize
+import HomeScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.pregnancy.edu.common.base.Destination
-import com.pregnancy.edu.common.base.composable.ContentArea
 import com.pregnancy.edu.feature.authentication.addAuthenticationNavigation
 import com.pregnancy.edu.feature.blogpost.detail.BlogPostDetailScreen
 import com.pregnancy.edu.feature.blogpost.home.BlogPostScreen
@@ -18,6 +17,7 @@ import com.pregnancy.edu.feature.profile.addProfileGraph
 import com.pregnancy.edu.feature.reminder.add.AddReminderScreen
 import com.pregnancy.edu.feature.reminder.home.ReminderScreen
 import com.pregnancy.edu.feature.splashscreen.SplashScreen
+import java.util.Calendar
 
 @Composable
 fun AppNavHost(
@@ -59,10 +59,7 @@ fun AppNavHost(
             startDestination = Destination.Home.route
         ) {
             composable(Destination.Home.route) {
-                ContentArea(
-                    modifier = Modifier.fillMaxSize(),
-                    destination = Destination.Home
-                )
+                HomeScreen(appState = appState)
             }
 
             composable(Destination.Blogs.route) {

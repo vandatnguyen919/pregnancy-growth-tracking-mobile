@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Singleton
 
@@ -47,11 +48,12 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val gson = GsonBuilder()
             .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
+            .registerTypeAdapter(LocalDate::class.java, LocalDateAdapter())
             .create()
 
         return Retrofit.Builder()
 //            .baseUrl(BuildConfig.BASE_URL)
-            .baseUrl("http://21.64.2.246:8080")
+            .baseUrl("http://192.168.1.92:8080")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -73,6 +75,26 @@ object NetworkModule {
                 null
             } else {
                 LocalDateTime.parse(dateString)
+            }
+        }
+    }
+
+    class LocalDateAdapter : TypeAdapter<LocalDate>() {
+        override fun write(out: JsonWriter, value: LocalDate?) {
+            if (value == null) {
+                out.nullValue()
+            } else {
+                out.value(value.toString()) // ISO-8601 format (yyyy-MM-dd)
+            }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        override fun read(input: JsonReader): LocalDate? {
+            val dateString = input.nextString()
+            return if (dateString.isNullOrEmpty()) {
+                null
+            } else {
+                LocalDate.parse(dateString)
             }
         }
     }

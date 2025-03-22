@@ -22,7 +22,7 @@ fun CalendarStripPreview() {
 
 @Composable
 fun CalendarStrip(
-    startDate: Calendar = Calendar.getInstance().apply { add(Calendar.DAY_OF_MONTH, -3) }, // Start 3 days before today
+    startDate: Calendar = Calendar.getInstance(), // Start 3 days before today
     daysCount: Int = 7,
     selectedDate: Calendar = Calendar.getInstance(),
     onDateSelected: (Calendar) -> Unit

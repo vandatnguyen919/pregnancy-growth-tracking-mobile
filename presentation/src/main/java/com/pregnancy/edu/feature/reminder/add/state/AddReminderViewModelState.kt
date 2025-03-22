@@ -12,6 +12,7 @@ data class AddReminderViewModelState(
     val selectedReminderType: String? = ReminderType.APPOINTMENT.displayName,
     val selectedDate: Calendar = Calendar.getInstance(),
     val selectedTime: Calendar = Calendar.getInstance(),
+    val addSuccess: Boolean = false,
     val isLoading: Boolean = false,
     val error: String? = null
 ) : ViewModelState() {
@@ -24,6 +25,7 @@ data class AddReminderViewModelState(
             selectedReminderType = selectedReminderType,
             selectedDate = selectedDate,
             selectedTime = selectedTime,
+            addSuccess = addSuccess,
             isLoading = isLoading,
             error = error
         )

@@ -7,8 +7,10 @@ import com.pregnancy.data.source.remote.api.ReminderApiService
 import com.pregnancy.data.source.remote.model.reminder.ReminderDto
 import retrofit2.HttpException
 import java.io.IOException
+import java.time.LocalDateTime
 
 class ReminderPagingSource(
+    val reminderDate: LocalDateTime? = null,
     private val apiService: ReminderApiService
 ) : PagingSource<Int, ReminderDto>()  {
 
@@ -26,6 +28,7 @@ class ReminderPagingSource(
             val response = apiService.getReminders(
                 page = page,
                 size = params.loadSize,
+                reminderDate = reminderDate
             )
 
             if (response.isSuccessful) {
