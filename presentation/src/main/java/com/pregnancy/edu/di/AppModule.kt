@@ -4,15 +4,18 @@ import android.content.Context
 import androidx.work.WorkManager
 import com.pregnancy.data.repository.AuthRepositoryImpl
 import com.pregnancy.data.repository.BlogRepositoryImpl
+import com.pregnancy.data.repository.DashboardRepositoryImpl
 import com.pregnancy.data.repository.PregnancyRepositoryImpl
 import com.pregnancy.data.repository.ReminderRepositoryImpl
 import com.pregnancy.data.source.local.TokenManager
 import com.pregnancy.data.source.remote.api.AuthApiService
 import com.pregnancy.data.source.remote.api.BlogApiService
+import com.pregnancy.data.source.remote.api.DashboardApiService
 import com.pregnancy.data.source.remote.api.PregnancyApiService
 import com.pregnancy.data.source.remote.api.ReminderApiService
 import com.pregnancy.domain.repository.AuthRepository
 import com.pregnancy.domain.repository.BlogRepository
+import com.pregnancy.domain.repository.DashboardRepository
 import com.pregnancy.domain.repository.PregnancyRepository
 import com.pregnancy.domain.repository.ReminderRepository
 import com.pregnancy.domain.usecase.auth.GetMyProfileUseCase
@@ -39,42 +42,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideGetBlogPostUseCase(repository: BlogRepository): GetBlogPostUseCase {
-        return GetBlogPostUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSendOtpUseCase(authRepository: AuthRepository): SendOtpUseCase {
-        return SendOtpUseCase(authRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideValidateEmailUseCase(authRepository: AuthRepository): ValidateEmailUseCase {
-        return ValidateEmailUseCase(authRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRegisterUseCase(authRepository: AuthRepository): RegisterUseCase {
-        return RegisterUseCase(authRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideLoginUseCase(authRepository: AuthRepository): LoginUseCase {
-        return LoginUseCase(authRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetMyProfileUseCase(authRepository: AuthRepository): GetMyProfileUseCase {
-        return GetMyProfileUseCase(authRepository)
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthRepository(authApiService: AuthApiService, tokenManager: TokenManager): AuthRepository {
         return AuthRepositoryImpl(authApiService, tokenManager)
     }
@@ -93,12 +60,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideGestationalWeekInsightUseCase(pregnancyRepository: PregnancyRepository): GetGestationalWeekInsightUseCase {
-        return GetGestationalWeekInsightUseCase(pregnancyRepository)
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthApi(retrofit: Retrofit): AuthApiService {
         return retrofit.create(AuthApiService::class.java)
     }
@@ -111,20 +72,20 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun provideDashboardApi(retrofit: Retrofit): DashboardApiService {
+        return retrofit.create(DashboardApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDashboardRepository(apiService: DashboardApiService): DashboardRepository {
+        return DashboardRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
     fun provideReminderRepository(apiService: ReminderApiService, workManager: WorkManager): ReminderRepository {
         return ReminderRepositoryImpl(apiService, workManager)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetRemindersUseCase(repository: ReminderRepository): GetRemindersUseCase {
-        return GetRemindersUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideCancelReminderUseCase(repository: ReminderRepository): CancelReminderUseCase {
-        return CancelReminderUseCase(repository)
     }
 
     @Provides
@@ -149,11 +110,5 @@ class AppModule {
     @Singleton
     fun provideBlogRepository(apiService: BlogApiService): BlogRepository {
         return BlogRepositoryImpl(apiService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetBlogPostsUseCase(repository: BlogRepository): GetBlogPostsUseCase {
-        return GetBlogPostsUseCase(repository)
     }
 }

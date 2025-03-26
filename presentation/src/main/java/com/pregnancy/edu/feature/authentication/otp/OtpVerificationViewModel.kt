@@ -8,6 +8,7 @@ import com.pregnancy.edu.feature.authentication.otp.event.OtpEvent
 import com.pregnancy.edu.feature.authentication.otp.state.OtpState
 import com.pregnancy.edu.feature.authentication.otp.state.OtpViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,7 +31,7 @@ class OtpVerificationViewModel @Inject constructor(
 
     private fun validateEmail(email: String, otp: String) {
         viewModelState.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             validateEmailUseCase(email, otp).onSuccess {
                 viewModelState.update { it.copy(isLoading = false, otpVerificationSuccess = true) }
             }.onFailure { exception ->
@@ -40,7 +41,7 @@ class OtpVerificationViewModel @Inject constructor(
     }
 
     private fun sendOtp(email: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             sendOtpUseCase(email).onSuccess {
                 viewModelState.update { it.copy(isLoading = false) }
             }.onFailure { exception ->

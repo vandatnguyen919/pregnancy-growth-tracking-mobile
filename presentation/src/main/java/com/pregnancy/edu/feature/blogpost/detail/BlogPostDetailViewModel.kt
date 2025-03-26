@@ -7,6 +7,7 @@ import com.pregnancy.edu.feature.blogpost.detail.event.BlogPostDetailEvent
 import com.pregnancy.edu.feature.blogpost.detail.state.BlogPostDetailState
 import com.pregnancy.edu.feature.blogpost.detail.state.BlogPostDetailViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,7 +29,7 @@ class BlogPostDetailViewModel @Inject constructor(
 
     private fun loadBlogPost(blogPostId: Long) {
         viewModelState.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = getBlogPostUseCase(blogPostId)
             result.onSuccess { blogPost ->
                 viewModelState.update { it.copy(blogPost = blogPost, isLoading = false, error = null) }

@@ -2,13 +2,16 @@ package com.pregnancy.edu.feature.home
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.viewModelScope
+import com.pregnancy.domain.usecase.dashboard.GetGestationalWeekChartsUseCase
 import com.pregnancy.domain.usecase.pregnancy.GetGestationalWeekInsightUseCase
+import com.pregnancy.domain.usecase.pregnancy.GetMyFetusesUseCase
 import com.pregnancy.domain.usecase.pregnancy.GetOnGoingPregnancyUseCase
 import com.pregnancy.edu.common.base.viewmodel.BaseViewModel
 import com.pregnancy.edu.feature.home.event.HomeEvent
 import com.pregnancy.edu.feature.home.state.HomeState
 import com.pregnancy.edu.feature.home.state.HomeViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -18,26 +21,31 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getOnGoingPregnancyUseCase: GetOnGoingPregnancyUseCase,
-    private val getGestationalWeekInsightUseCase: GetGestationalWeekInsightUseCase
+    private val getGestationalWeekInsightUseCase: GetGestationalWeekInsightUseCase,
+    private val getMyFetusesUseCase: GetMyFetusesUseCase,
+    private val getGestationalWeekChartsUseCase: GetGestationalWeekChartsUseCase,
 ) : BaseViewModel<HomeEvent, HomeState, HomeViewModelState>(
     initState = HomeViewModelState(),
 ) {
     init {
         loadMyOnGoingPregnancy()
         loadGestationalWeekInsight()
+        loadMyFetuses()
     }
 
     override fun onTriggerEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.LoadMyOnGoingPregnancy -> loadMyOnGoingPregnancy()
             is HomeEvent.LoadGestationalWeekInsight -> loadGestationalWeekInsight()
+            is HomeEvent.LoadMyFetuses ->  loadMyFetuses()
+            is HomeEvent.LoadGestationalWeekCharts -> loadGestationalWeekCharts(event.fetusId, event.week)
         }
     }
 
     private fun loadMyOnGoingPregnancy() {
         viewModelState.update { it.copy(isLoading = true) }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getOnGoingPregnancyUseCase().onSuccess { pregnancy ->
                 viewModelState.update { it.copy(pregnancy = pregnancy, isLoading = false) }
                 // Recalculate progress when pregnancy data is loaded
@@ -49,9 +57,29 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun loadGestationalWeekInsight() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getGestationalWeekInsightUseCase().onSuccess { insight ->
                 viewModelState.update { it.copy(gestationalWeekInsight = insight) }
+            }.onFailure { error ->
+                viewModelState.update { it.copy(error = error.message) }
+            }
+        }
+    }
+
+    private fun loadMyFetuses() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getMyFetusesUseCase().onSuccess { fetuses ->
+                viewModelState.update { it.copy(fetuses = fetuses) }
+            }.onFailure { error ->
+                viewModelState.update { it.copy(error = error.message) }
+            }
+        }
+    }
+
+    private fun loadGestationalWeekCharts(fetusId: Long, week: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            getGestationalWeekChartsUseCase(fetusId, week).onSuccess { charts ->
+                viewModelState.update { it.copy(gestationalWeekCharts = charts) }
             }.onFailure { error ->
                 viewModelState.update { it.copy(error = error.message) }
             }

@@ -22,7 +22,9 @@ import com.pregnancy.data.source.remote.parseErrorResponse
 import com.pregnancy.data.worker.ReminderWorker
 import com.pregnancy.domain.model.reminder.Reminder
 import com.pregnancy.domain.repository.ReminderRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -56,7 +58,7 @@ class ReminderRepositoryImpl @Inject constructor(
             pagingData.map { reminderDto ->
                 reminderDto.toDomain()
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun scheduleReminder(reminder: Reminder): Result<Reminder> {

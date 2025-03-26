@@ -3,6 +3,7 @@ package com.pregnancy.data.repository
 import com.pregnancy.data.mapper.toDomain
 import com.pregnancy.data.source.remote.api.PregnancyApiService
 import com.pregnancy.data.source.remote.parseErrorResponse
+import com.pregnancy.domain.model.pregnancy.Fetus
 import com.pregnancy.domain.model.pregnancy.Pregnancy
 import com.pregnancy.domain.repository.PregnancyRepository
 import javax.inject.Inject
@@ -36,6 +37,24 @@ class PregnancyRepositoryImpl @Inject constructor(
                 response.body()?.let { res ->
                     val data = res.data
                     Result.success(data)
+                } ?: Result.failure(Exception("Empty response body"))
+            } else {
+                val errorBody = response.errorBody()?.string()
+                val errorMessage = parseErrorResponse(errorBody)
+                Result.failure(Exception(errorMessage))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getMyFetuses(): Result<List<Fetus>> {
+        return try {
+            val response = apiService.getMyFetuses()
+            if (response.isSuccessful) {
+                response.body()?.let { res ->
+                    val data = res.data
+                    Result.success(data.map { it.toDomain() })
                 } ?: Result.failure(Exception("Empty response body"))
             } else {
                 val errorBody = response.errorBody()?.string()

@@ -9,6 +9,7 @@ import com.pregnancy.edu.feature.reminder.add.event.AddReminderEvent
 import com.pregnancy.edu.feature.reminder.add.state.AddReminderState
 import com.pregnancy.edu.feature.reminder.add.state.AddReminderViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.ZoneId
@@ -78,7 +79,7 @@ class AddReminderViewModel @Inject constructor(
             }.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
         )
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             scheduleReminderUseCase(
                 reminder = reminder
             ).onSuccess {

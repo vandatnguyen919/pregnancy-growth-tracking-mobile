@@ -9,5 +9,6 @@ object ApiConstants {
     const val BLOG_POST_PATH = "$BASE_PATH/blog-posts"
     const val REMINDER_PATH = "$BASE_PATH/reminders"
     const val PREGNANCY_PATH = "$BASE_PATH/pregnancies"
-    // Add other paths as needed
+    const val DASHBOARD_PATH = "$BASE_PATH/dashboard"
+    const val METRIC_PATH = "$BASE_PATH/metrics"
 }

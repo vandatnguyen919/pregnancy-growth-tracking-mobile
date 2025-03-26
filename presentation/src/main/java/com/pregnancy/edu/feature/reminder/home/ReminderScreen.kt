@@ -35,13 +35,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.pregnancy.domain.model.reminder.Reminder
+import com.pregnancy.edu.R
 import com.pregnancy.edu.common.theme.Pink800
 import com.pregnancy.edu.common.theme.Pink900
 import com.pregnancy.edu.feature.reminder.home.composables.CalendarStrip
@@ -49,8 +52,10 @@ import com.pregnancy.edu.feature.reminder.home.composables.ReminderItem
 import com.pregnancy.edu.feature.reminder.home.composables.ReminderSearchBox
 import com.pregnancy.edu.feature.reminder.home.event.ReminderEvent
 import com.pregnancy.edu.presentation.navigation.PregnancyAppState
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.Calendar
+import java.util.Locale
 
 @SuppressLint("NewApi")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,10 +100,11 @@ fun ReminderScreen(
                 selectedDate = selectedDate
             )
             Spacer(modifier = Modifier.height(16.dp))
-            ReminderSearchBox(
-                query = "",
-                onQueryChange = { },
-                onSearchClick = { }
+            Text(
+                text = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(selectedDate.time),
+                color = Color.Black,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = Modifier.height(24.dp))
         }

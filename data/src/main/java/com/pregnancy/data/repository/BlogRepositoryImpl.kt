@@ -15,7 +15,9 @@ import com.pregnancy.data.source.remote.paging.BlogPagingSource
 import com.pregnancy.data.source.remote.parseErrorResponse
 import com.pregnancy.domain.model.blogpost.BlogPost
 import com.pregnancy.domain.repository.BlogRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
 class BlogRepositoryImpl(
@@ -38,7 +40,7 @@ class BlogRepositoryImpl(
             pagingData.map { blogPostDto ->
                 blogPostDto.toDomain()
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun getBlogPost(id: Long): Result<BlogPost> {

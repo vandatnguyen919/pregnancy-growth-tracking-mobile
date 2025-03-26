@@ -12,6 +12,7 @@ import com.pregnancy.edu.feature.reminder.home.event.ReminderEvent
 import com.pregnancy.edu.feature.reminder.home.state.ReminderState
 import com.pregnancy.edu.feature.reminder.home.state.ReminderViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -60,7 +61,7 @@ class ReminderViewModel @Inject constructor(
     private fun loadReminders(localDateTime: LocalDateTime? = null) {
         viewModelState.update { it.copy(isLoading = true) }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val remindersFlow: Flow<PagingData<Reminder>> =
                     getRemindersUseCase(localDateTime).cachedIn(viewModelScope)

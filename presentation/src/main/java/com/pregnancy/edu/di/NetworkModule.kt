@@ -8,6 +8,7 @@ import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
 import com.pregnancy.data.source.local.TokenManager
 import com.pregnancy.data.source.remote.interceptor.AuthInterceptor
+import com.pregnancy.edu.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
